@@ -6,7 +6,11 @@ SECRET_KEY = 'django-insecure-y8zd1l_8-&+84)-u_@gsaq7!ga6=!6lk+e8mzajv(qwg*ymy+a
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+ALLOWED_HOSTS = [
+    'localhost',
+    '127.0.0.1',
+    'nikki-flower-cake-ygrc.onrender.com'
+]
 
 # Development-specific apps
 INSTALLED_APPS += [
