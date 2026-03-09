@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Secure Payment - Nikki Flower & Cake{% endblock %}
+
+{% block content %}
+<div class="min-h-screen bg-gray-50 py-12">
+    <div class="max-w-md mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="bg-white shadow-xl rounded-2xl overflow-hidden border border-gray-100 relative">
+
+            <!-- Secure header -->
+            <div class="bg-gray-900 text-white p-6 text-center">
+                <div class="flex items-center justify-center space-x-2 text-2xl font-bold mb-2">
+                    <i class="fas fa-lock text-green-400"></i>
+                    <span>Secure Checkout</span>
+                </div>
+                <p class="text-gray-400 text-sm">Demo Payment Gateway</p>
+            </div>
+
+            <div class="p-6">
+                <!-- Order summary -->
+                <div class="bg-purple-50 rounded-xl p-4 mb-8">
+                    <h3
+                        class="text-sm font-semibold text-purple-900 uppercase tracking-wider mb-3 border-b border-purple-200 pb-2">
+                        Order Details</h3>
+                    <div class="space-y-2">
+                        <div class="flex justify-between text-sm">
+                            <span class="text-gray-600">Order Number</span>
+                            <span class="font-medium text-gray-900">#{{ order.order_number }}</span>
+                        </div>
+                        <div class="flex justify-between text-sm">
+                            <span class="text-gray-600">Items</span>
+                            <span class="font-medium text-gray-900">{{ order.items.count }} item(s)</span>
+                        </div>
+                        <div class="flex justify-between pt-2 border-t border-purple-200">
+                            <span class="font-bold text-gray-900">Amount to Pay</span>
+                            <span class="font-bold text-purple-700 text-lg">₹{{ order.total_amount }}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Simulation Info -->
+                <div class="text-center mb-8">
+                    <div
+                        class="inline-block p-4 bg-yellow-50 border border-yellow-200 rounded-lg text-yellow-800 text-sm">
+                        <i class="fas fa-info-circle mb-2 text-xl"></i>
+                        <p class="font-medium">This is a demonstration.</p>
+                        <p class="mt-1">Click the button below to simulate a successful payment transaction.</p>
+                    </div>
+                </div>
+
+                <form method="post" action="{% url 'payments:process' order.id %}">
+                    {% csrf_token %}
+                    <button type="submit"
+                        class="w-full flex justify-center items-center py-4 px-4 border border-transparent rounded-xl shadow-lg text-lg font-bold text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-all transform hover:scale-105 active:scale-95">
+                        <i class="fas fa-check-circle mr-2"></i> Pay ₹{{ order.total_amount }} Now
+                    </button>
+                    <a href="{% url 'products:home' %}"
+                        class="block text-center mt-4 text-sm text-gray-500 hover:text-gray-900 transition-colors">Cancel
+                        Transaction</a>
+                </form>
+
+            </div>
+
+            <div class="bg-gray-50 p-4 border-t border-gray-100 flex justify-center items-center space-x-4">
+                <i class="fab fa-cc-visa text-2xl text-gray-400"></i>
+                <i class="fab fa-cc-mastercard text-2xl text-gray-400"></i>
+                <i class="fab fa-cc-amex text-2xl text-gray-400"></i>
+                <!-- generic UPI placeholder icon -->
+                <svg class="h-6 w-auto text-gray-400" viewBox="0 0 512 512" fill="currentColor">
+                    <path
+                        d="M464 256C464 141.1 370.9 48 256 48C141.1 48 48 141.1 48 256C48 370.9 141.1 464 256 464C370.9 464 464 370.9 464 256ZM256 0C397.4 0 512 114.6 512 256C512 397.4 397.4 512 256 512C114.6 512 0 397.4 0 256C0 114.6 114.6 0 256 0ZM370.8 171.7L251.3 291.2L201.2 241L151.1 291.1L251.3 391.3L420.9 221.8L370.8 171.7Z" />
+                </svg>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

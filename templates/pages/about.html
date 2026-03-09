@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block title %}About Us - Nikki Flower & Cake{% endblock %}
+
+{% block content %}
+<div class="bg-purple-50 py-16">
+    <div class="container mx-auto px-4">
+        <div class="max-w-3xl mx-auto text-center animate-fade-in-up">
+            <h1 class="text-4xl md:text-5xl font-playfair font-bold text-gray-900 mb-6">Our Story</h1>
+            <p class="text-lg text-gray-600 mb-8 leading-relaxed">
+                Welcome to Nikki Flower & Cake! We believe everyday moments and special occasions deserve to be
+                celebrated with joy, beauty, and sweetness.
+                Started by a group of passionate florists and pastry chefs, we aim to deliver premium quality products
+                right to your doorstep.
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-12 text-left">
+                <div class="bg-white p-6 rounded-2xl shadow-sm hover-lift">
+                    <i class="fas fa-leaf text-3xl text-green-500 mb-4 animate-bounce-slow"></i>
+                    <h3 class="text-xl font-bold mb-2">Fresh Flowers</h3>
+                    <p class="text-gray-600">Sourced directly from local farms. We ensure our blooms are fresh, vibrant,
+                        and beautifully arranged for max impact.</p>
+                </div>
+                <div class="bg-white p-6 rounded-2xl shadow-sm hover-lift">
+                    <i class="fas fa-birthday-cake text-3xl text-pink-500 mb-4 animate-bounce-slow"
+                        style="animation-delay: 0.5s;"></i>
+                    <h3 class="text-xl font-bold mb-2">Artisan Cakes</h3>
+                    <p class="text-gray-600">Baked daily with high-quality ingredients. Whether it's a grand wedding or
+                        a cozy birthday, our cakes steal the show.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

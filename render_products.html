@@ -1,0 +1,1631 @@
+<!DOCTYPE html>
+
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop All - Nikki Flower & Cake</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/static/images/favicon.ico">
+
+    <!-- Tailwind CSS Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'sans': ['Inter', 'sans-serif'],
+                        'playfair': ['Playfair Display', 'serif']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Alpine.js -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+    <!-- HTMX -->
+    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="/static/css/style.css">
+
+    <!-- Font Awesome for icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
+    <!-- AOS Animation CSS -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <!-- Custom Animations -->
+    <style>
+        /* Custom keyframe animations */
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0px) rotate(-6deg);
+            }
+
+            50% {
+                transform: translateY(-10px) rotate(-6deg);
+            }
+        }
+
+        @keyframes bounce-slow {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-15px);
+            }
+        }
+
+        @keyframes fade-in-up {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse-glow {
+
+            0%,
+            100% {
+                box-shadow: 0 0 15px rgba(147, 51, 234, 0.4);
+            }
+
+            50% {
+                box-shadow: 0 0 30px rgba(147, 51, 234, 0.8);
+            }
+        }
+
+        @keyframes shimmer {
+            0% {
+                background-position: -1000px 0;
+            }
+
+            100% {
+                background-position: 1000px 0;
+            }
+        }
+
+        @keyframes slide-in-right {
+            0% {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+
+            100% {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes scale-up {
+            0% {
+                transform: scale(0.8);
+                opacity: 0;
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        @keyframes trending-rotate {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes heartbeat {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.1);
+            }
+        }
+
+        @keyframes wiggle {
+
+            0%,
+            100% {
+                transform: rotate(0deg);
+            }
+
+            25% {
+                transform: rotate(-5deg);
+            }
+
+            75% {
+                transform: rotate(5deg);
+            }
+        }
+
+        @keyframes glow-rainbow {
+            0% {
+                box-shadow: 0 0 20px #ff0000, 0 0 30px #ff0000;
+            }
+
+            14% {
+                box-shadow: 0 0 20px #ff9900, 0 0 30px #ff9900;
+            }
+
+            28% {
+                box-shadow: 0 0 20px #ffff00, 0 0 30px #ffff00;
+            }
+
+            42% {
+                box-shadow: 0 0 20px #00ff00, 0 0 30px #00ff00;
+            }
+
+            57% {
+                box-shadow: 0 0 20px #00ffff, 0 0 30px #00ffff;
+            }
+
+            71% {
+                box-shadow: 0 0 20px #0000ff, 0 0 30px #0000ff;
+            }
+
+            85% {
+                box-shadow: 0 0 20px #ff00ff, 0 0 30px #ff00ff;
+            }
+
+            100% {
+                box-shadow: 0 0 20px #ff0000, 0 0 30px #ff0000;
+            }
+        }
+
+        @keyframes slide-down {
+            0% {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+
+            100% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes zoom-in-out {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.2);
+            }
+        }
+
+        @keyframes fire-flicker {
+
+            0%,
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+
+            50% {
+                opacity: 0.8;
+                transform: scale(1.3);
+            }
+        }
+
+        /* Animation classes */
+        .animate-float {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .animate-bounce-slow {
+            animation: bounce-slow 3s ease-in-out infinite;
+        }
+
+        .animate-fade-in-up {
+            animation: fade-in-up 0.6s ease-out;
+        }
+
+        .animate-pulse-glow {
+            animation: pulse-glow 2s ease-in-out infinite;
+        }
+
+        .animate-shimmer {
+            animation: shimmer 2s linear infinite;
+            background: linear-gradient(to right, transparent 0%, rgba(255, 255, 255, 0.2) 50%, transparent 100%);
+            background-size: 1000px 100%;
+        }
+
+        .animate-slide-in-right {
+            animation: slide-in-right 0.5s ease-out;
+        }
+
+        .animate-scale-up {
+            animation: scale-up 0.5s ease-out;
+        }
+
+        .animate-trending-rotate {
+            animation: trending-rotate 10s linear infinite;
+        }
+
+        .animate-heartbeat {
+            animation: heartbeat 1s ease-in-out infinite;
+        }
+
+        .animate-wiggle {
+            animation: wiggle 2s ease-in-out infinite;
+        }
+
+        .animate-glow-rainbow {
+            animation: glow-rainbow 3s linear infinite;
+        }
+
+        .animate-slide-down {
+            animation: slide-down 0.5s ease-out;
+        }
+
+        .animate-zoom-in-out {
+            animation: zoom-in-out 2s ease-in-out infinite;
+        }
+
+        .animate-fire-flicker {
+            animation: fire-flicker 1.5s ease-in-out infinite;
+        }
+
+        /* Smooth transitions */
+        .transition-all-300 {
+            transition: all 0.3s ease;
+        }
+
+        .transition-all-500 {
+            transition: all 0.5s ease;
+        }
+
+        /* Hover effects */
+        .hover-lift {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .hover-lift:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Gradient animation */
+        .gradient-animate {
+            background-size: 200% 200%;
+            animation: gradient-shift 5s ease infinite;
+        }
+
+        @keyframes gradient-shift {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        /* --- Global Live Background Animations --- */
+        @keyframes gradient-shift {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        @keyframes particle-drift {
+            0% {
+                transform: translate(0, 0) rotate(0deg);
+                opacity: 0;
+            }
+
+            30% {
+                opacity: 0.6;
+            }
+
+            70% {
+                opacity: 0.6;
+            }
+
+            100% {
+                transform: translate(100px, -200px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .live-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -10;
+            background: linear-gradient(-45deg, #f3e8ff, #fce7f3, #fdf4ff, #fffbeb);
+            background-size: 400% 400%;
+            animation: gradient-shift 15s ease infinite;
+        }
+
+        .particle {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: rgba(147, 51, 234, 0.1);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: particle-drift 8s infinite linear;
+        }
+
+        /* Particle Variations */
+        .p-1 {
+            left: 10%;
+            top: 80%;
+            width: 40px;
+            height: 40px;
+            animation-duration: 12s;
+            animation-delay: 0s;
+        }
+
+        .p-2 {
+            left: 30%;
+            top: 50%;
+            width: 25px;
+            height: 25px;
+            animation-duration: 8s;
+            animation-delay: 2s;
+            background: rgba(236, 72, 153, 0.1);
+        }
+
+        .p-3 {
+            left: 60%;
+            top: 90%;
+            width: 50px;
+            height: 50px;
+            animation-duration: 15s;
+            animation-delay: 4s;
+        }
+
+        .p-4 {
+            left: 80%;
+            top: 70%;
+            width: 30px;
+            height: 30px;
+            animation-duration: 10s;
+            animation-delay: 1s;
+            background: rgba(245, 158, 11, 0.1);
+        }
+
+        .p-5 {
+            left: 20%;
+            top: 30%;
+            width: 15px;
+            height: 15px;
+            animation-duration: 7s;
+            animation-delay: 5s;
+        }
+
+        .p-6 {
+            left: 70%;
+            top: 20%;
+            width: 35px;
+            height: 35px;
+            animation-duration: 14s;
+            animation-delay: 3s;
+            background: rgba(236, 72, 153, 0.1);
+        }
+    </style>
+
+
+    
+</head>
+
+<body class="font-sans bg-transparent text-gray-800 relative flex flex-col min-h-screen"
+    x-data="{ mobileMenuOpen: false, cartOpen: false }">
+    <!-- Global Live Background -->
+    <div class="live-bg">
+        <div class="particle p-1"></div>
+        <div class="particle p-2"></div>
+        <div class="particle p-3"></div>
+        <div class="particle p-4"></div>
+        <div class="particle p-5"></div>
+        <div class="particle p-6"></div>
+    </div>
+
+    <!-- Skip to content -->
+    <a href="#main-content"
+        class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:bg-white focus:text-black focus:p-4">
+        Skip to content
+    </a>
+
+    <!-- Header -->
+    <header class="sticky top-0 z-40 bg-white shadow-sm">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex items-center justify-between">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <a href="/" class="text-2xl font-playfair font-bold text-purple-600">
+                        Nikki<span class="text-amber-500">Flower</span>&Cake
+                    </a>
+                </div>
+
+                <!-- Desktop Navigation -->
+                <nav class="hidden md:flex space-x-8">
+                    <a href="/"
+                        class="text-gray-700 hover:text-purple-600 transition-colors">Home</a>
+                    <a href="/products/?category=flowers"
+                        class="text-gray-700 hover:text-purple-600 transition-colors">Flowers</a>
+                    <a href="/products/?category=cakes"
+                        class="text-gray-700 hover:text-purple-600 transition-colors">Cakes</a>
+                    <a href="/products/?category=occasions"
+                        class="text-gray-700 hover:text-purple-600 transition-colors">Occasions</a>
+                    <a href="/about/" class="text-gray-700 hover:text-purple-600 transition-colors">About</a>
+                    <a href="/contact/"
+                        class="text-gray-700 hover:text-purple-600 transition-colors">Contact</a>
+                </nav>
+
+                <!-- User Actions -->
+                <div class="flex items-center space-x-4">
+                    <!-- Search -->
+                    <div class="hidden md:block relative">
+                        <input type="text" placeholder="Search..."
+                            class="border border-gray-300 rounded-full py-2 px-4 pl-10 w-64 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                        <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
+                    </div>
+
+                    <!-- User Menu -->
+                    
+                    <a href="/users/login/" class="text-gray-700 hover:text-purple-600">
+                        <i class="fas fa-user-plus text-xl"></i>
+                    </a>
+                    
+
+                    <!-- Cart -->
+                    <div x-data="{ cartOpen: false }" class="relative">
+                        <button @click="cartOpen = !cartOpen" class="text-gray-700 hover:text-purple-600 relative">
+                            <i class="fas fa-shopping-bag text-xl"></i>
+                            <span id="cart-count"
+                                class="absolute -top-2 -right-2 bg-purple-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                                0
+                            </span>
+                        </button>
+
+                        <!-- Cart Dropdown -->
+                        <div x-show="cartOpen" @click.away="cartOpen = false"
+                            class="absolute right-0 mt-2 w-80 bg-white rounded-lg shadow-xl p-4 z-50 border"
+                            id="cart-dropdown">
+                            <h3 class="font-semibold mb-3">Your Cart</h3>
+                            <div class="space-y-3 max-h-96 overflow-y-auto custom-scrollbar">
+                                
+                                <div class="text-center py-6">
+                                    <i class="fas fa-shopping-cart text-gray-200 text-3xl mb-2"></i>
+                                    <p class="text-sm text-gray-500">Your cart is empty</p>
+                                </div>
+                                
+                            </div>
+                            
+                        </div>
+                    </div>
+
+                    <!-- Mobile Menu Button -->
+                    <button @click="mobileMenuOpen = !mobileMenuOpen" class="md:hidden text-gray-700">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile Menu -->
+            <div x-show="mobileMenuOpen" class="md:hidden mt-4 pb-4 space-y-3">
+                <a href="/" class="block text-gray-700 hover:text-purple-600">Home</a>
+                <a href="/products/?category=flowers"
+                    class="block text-gray-700 hover:text-purple-600">Flowers</a>
+                <a href="/products/?category=cakes"
+                    class="block text-gray-700 hover:text-purple-600">Cakes</a>
+                <a href="/products/?category=occasions"
+                    class="block text-gray-700 hover:text-purple-600">Occasions</a>
+                <a href="/about/" class="block text-gray-700 hover:text-purple-600">About</a>
+                <a href="/contact/" class="block text-gray-700 hover:text-purple-600">Contact</a>
+
+                <!-- Mobile Search -->
+                <div class="relative mt-3">
+                    <input type="text" placeholder="Search..."
+                        class="border border-gray-300 rounded-full py-2 px-4 pl-10 w-full focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                    <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main id="main-content" class="flex-grow flex flex-col">
+        
+<!-- Page Header -->
+<div class="bg-purple-50 py-12 lg:py-16 relative overflow-hidden">
+    <!-- Decorative background elements -->
+    <div
+        class="absolute top-0 right-0 w-64 h-64 bg-purple-200 rounded-full mix-blend-multiply filter blur-3xl opacity-50 animate-pulse-glow">
+    </div>
+    <div class="absolute bottom-0 left-0 w-64 h-64 bg-pink-200 rounded-full mix-blend-multiply filter blur-3xl opacity-50 animate-pulse-glow"
+        style="animation-delay: 2s;"></div>
+
+    <div class="container mx-auto px-4 relative z-10 text-center animate-fade-in-up">
+        <!-- Breadcrumbs -->
+        <nav class="flex justify-center text-sm font-medium text-gray-500 mb-4" aria-label="Breadcrumb">
+            <ol class="inline-flex items-center space-x-1 md:space-x-3">
+                <li class="inline-flex items-center">
+                    <a href="/"
+                        class="inline-flex items-center hover:text-purple-600 transition-colors">
+                        <i class="fas fa-home mr-2 flex-shrink-0"></i>
+                        Home
+                    </a>
+                </li>
+                <li>
+                    <div class="flex items-center">
+                        <i class="fas fa-chevron-right text-gray-400 mx-2 text-xs"></i>
+                        <span class="text-gray-900" aria-current="page">
+                            
+                            All Products
+                            
+                        </span>
+                    </div>
+                </li>
+            </ol>
+        </nav>
+
+        <h1 class="text-4xl md:text-5xl font-playfair font-bold text-gray-900 mb-4">
+            
+            Our Complete Collection
+            
+        </h1>
+        <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+            Discover our handpicked selection of premium flowers, artisan cakes, and delightful gifts designed to make
+            every moment truly special.
+        </p>
+    </div>
+</div>
+
+<div class="bg-gray-50 py-12 w-full">
+    <div class="container mx-auto px-4 lg:px-8 max-w-[1600px]">
+        <div class="flex flex-col lg:flex-row gap-8 items-start">
+
+            <!-- Filters Sidebar (Desktop) -->
+            <aside
+                class="hidden lg:block w-72 flex-shrink-0 sticky top-28 bg-white border border-gray-100 rounded-2xl shadow-sm p-6 overflow-y-auto max-h-[calc(100vh-120px)] animate-slide-in-right custom-scrollbar">
+                <div class="flex items-center justify-between mb-6 pb-4 border-b border-gray-100">
+                    <h2 class="text-xl font-bold flex items-center gap-2">
+                        <i class="fas fa-filter text-purple-600"></i> Filters
+                    </h2>
+                    <a href="/products/"
+                        class="text-sm text-gray-500 hover:text-purple-600 underline">Clear All</a>
+                </div>
+
+                <form id="filter-form" action="/products/" method="GET" class="space-y-8">
+                    <!-- Preserve search query if present -->
+                    
+
+                    <!-- Categories Filter -->
+                    <div>
+                        <h3 class="font-bold text-gray-900 mb-4">Categories</h3>
+                        <div class="space-y-3">
+                            <label class="flex items-center group cursor-pointer">
+                                <input type="radio" name="category" value="" onchange="this.form.submit()"
+                                    class="form-radio h-4 w-4 text-purple-600 border-gray-300 focus:ring-purple-500 cursor-pointer"
+                                    checked>
+                                <span
+                                    class="ml-3 text-sm text-gray-600 group-hover:text-purple-600 transition-colors font-medium">All
+                                    Categories</span>
+                            </label>
+                            
+                            <label class="flex items-center group cursor-pointer">
+                                <input type="radio" name="category" value="cakes" onchange="this.form.submit()"
+                                    class="form-radio h-4 w-4 text-purple-600 border-gray-300 focus:ring-purple-500 cursor-pointer"
+                                    >
+                                <span
+                                    class="ml-3 text-sm text-gray-600 group-hover:text-purple-600 transition-colors">Cakes</span>
+                            </label>
+                            
+                            <label class="flex items-center group cursor-pointer">
+                                <input type="radio" name="category" value="combos" onchange="this.form.submit()"
+                                    class="form-radio h-4 w-4 text-purple-600 border-gray-300 focus:ring-purple-500 cursor-pointer"
+                                    >
+                                <span
+                                    class="ml-3 text-sm text-gray-600 group-hover:text-purple-600 transition-colors">Combos</span>
+                            </label>
+                            
+                            <label class="flex items-center group cursor-pointer">
+                                <input type="radio" name="category" value="flowers" onchange="this.form.submit()"
+                                    class="form-radio h-4 w-4 text-purple-600 border-gray-300 focus:ring-purple-500 cursor-pointer"
+                                    >
+                                <span
+                                    class="ml-3 text-sm text-gray-600 group-hover:text-purple-600 transition-colors">Flowers</span>
+                            </label>
+                            
+                            <label class="flex items-center group cursor-pointer">
+                                <input type="radio" name="category" value="occasions" onchange="this.form.submit()"
+                                    class="form-radio h-4 w-4 text-purple-600 border-gray-300 focus:ring-purple-500 cursor-pointer"
+                                    >
+                                <span
+                                    class="ml-3 text-sm text-gray-600 group-hover:text-purple-600 transition-colors">Occasions</span>
+                            </label>
+                            
+                        </div>
+                    </div>
+
+                    <div class="h-px bg-gray-100 w-full"></div>
+
+                    <!-- Occasions Filter -->
+                    <div>
+                        <h3 class="font-bold text-gray-900 mb-4">Occasions</h3>
+                        <div class="space-y-3 max-h-48 overflow-y-auto pr-2 custom-scrollbar">
+                            <label class="flex items-center group cursor-pointer">
+                                <input type="radio" name="occasion" value="" onchange="this.form.submit()"
+                                    class="form-radio h-4 w-4 text-purple-600 border-gray-300 focus:ring-purple-500 cursor-pointer"
+                                    checked>
+                                <span
+                                    class="ml-3 text-sm text-gray-600 group-hover:text-purple-600 transition-colors font-medium">All
+                                    Occasions</span>
+                            </label>
+                            
+                            <label class="flex items-center group cursor-pointer">
+                                <input type="radio" name="occasion" value="anniversary" onchange="this.form.submit()"
+                                    class="form-radio h-4 w-4 text-purple-600 border-gray-300 focus:ring-purple-500 cursor-pointer"
+                                    >
+                                <span
+                                    class="ml-3 text-sm text-gray-600 group-hover:text-purple-600 transition-colors">Anniversary</span>
+                            </label>
+                            
+                            <label class="flex items-center group cursor-pointer">
+                                <input type="radio" name="occasion" value="birthday" onchange="this.form.submit()"
+                                    class="form-radio h-4 w-4 text-purple-600 border-gray-300 focus:ring-purple-500 cursor-pointer"
+                                    >
+                                <span
+                                    class="ml-3 text-sm text-gray-600 group-hover:text-purple-600 transition-colors">Birthday</span>
+                            </label>
+                            
+                            <label class="flex items-center group cursor-pointer">
+                                <input type="radio" name="occasion" value="wedding" onchange="this.form.submit()"
+                                    class="form-radio h-4 w-4 text-purple-600 border-gray-300 focus:ring-purple-500 cursor-pointer"
+                                    >
+                                <span
+                                    class="ml-3 text-sm text-gray-600 group-hover:text-purple-600 transition-colors">Wedding</span>
+                            </label>
+                            
+                        </div>
+                    </div>
+
+                    <div class="h-px bg-gray-100 w-full"></div>
+
+                    <!-- Sort -->
+                    <div>
+                        <h3 class="font-bold text-gray-900 mb-4 flex items-center justify-between">Sort By
+                            <i class="fas fa-sort-amount-down-alt text-gray-400 text-sm"></i>
+                        </h3>
+                        <select name="sort" onchange="this.form.submit()"
+                            class="w-full bg-gray-50 border border-gray-200 text-gray-700 text-sm rounded-xl focus:ring-purple-500 focus:border-purple-500 block p-3 outline-none cursor-pointer hover:border-gray-300 transition-colors">
+                            <option value="created_at" selected>Newest
+                                Arrivals</option>
+                            <option value="price_low" >Price: Low
+                                to High</option>
+                            <option value="price_high" >Price:
+                                High to Low</option>
+                            <option value="rating" >Highest Rated
+                            </option>
+                        </select>
+                    </div>
+                </form>
+            </aside>
+
+            <!-- Main Product Grid Area -->
+            <div class="flex-1 w-full">
+                <!-- Mobile Filter Indicators (shows only if filters active) -->
+                
+
+                <!-- Mobile Filter & Sort Bar (Sticky) -->
+                <div
+                    class="lg:hidden sticky top-16 z-30 bg-white/90 backdrop-blur-md border-y border-gray-200 py-3 mb-6 grid grid-cols-2 divide-x divide-gray-200 animate-fade-in-up">
+                    <button
+                        class="text-gray-700 font-medium text-sm flex justify-center items-center gap-2 hover:text-purple-600 transition-colors"
+                        onclick="alert('Mobile dialog opening...')">
+                        <i class="fas fa-sort-amount-down-alt"></i> Sort
+                    </button>
+                    <button
+                        class="text-gray-700 font-medium text-sm flex justify-center items-center gap-2 hover:text-purple-600 transition-colors"
+                        onclick="alert('Mobile dialog opening...')">
+                        <i class="fas fa-filter"></i> Filters
+                    </button>
+                </div>
+
+                <!-- Products Display -->
+                <div id="product-grid"
+                    class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-6 animate-fade-in-up"
+                    style="animation-delay: 0.2s;">
+                    
+<div
+    class="bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 overflow-hidden group border border-gray-100 relative">
+
+    <!-- Badges -->
+    
+    <div
+        class="absolute top-4 left-4 z-10 bg-gradient-to-r from-amber-400 to-orange-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg flex items-center gap-1">
+        <i class="fas fa-fire text-[10px] animate-pulse"></i> Trending
+    </div>
+    
+
+    <!-- Image Container with Aspect Ratio -->
+    <a href="/products/luxury-bridal-wedding-bouquet/" class="block relative pt-[100%] overflow-hidden bg-gray-50">
+        
+        <img src="/media/products/white_lilies.png" alt="Luxury Bridal Wedding Bouquet"
+            class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+        
+
+        <!-- Quick Actions Overlay -->
+        <div
+            class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-4">
+            <button
+                class="bg-white text-purple-600 w-10 h-10 rounded-full flex items-center justify-center hover:bg-purple-600 hover:text-white transition-colors transform translate-y-4 group-hover:translate-y-0 duration-300 shadow-lg"
+                title="Quick View">
+                <i class="fas fa-eye"></i>
+            </button>
+            <button
+                class="bg-white text-pink-500 w-10 h-10 rounded-full flex items-center justify-center hover:bg-pink-500 hover:text-white transition-colors transform translate-y-4 group-hover:translate-y-0 duration-300 delay-75 shadow-lg"
+                title="Add to Wishlist">
+                <i class="fas fa-heart"></i>
+            </button>
+        </div>
+    </a>
+
+    <!-- Product Details -->
+    <div class="p-5">
+        <div class="flex items-start justify-between mb-2">
+            <div>
+                <a href="/products/luxury-bridal-wedding-bouquet/">
+                    <h3 class="text-lg font-bold text-gray-900 group-hover:text-purple-600 transition-colors line-clamp-1"
+                        title="Luxury Bridal Wedding Bouquet">Luxury Bridal Wedding Bouquet</h3>
+                </a>
+                <p class="text-sm text-gray-500 mb-1">Occasions</p>
+            </div>
+
+            <!-- Rating -->
+            <div class="flex items-center text-amber-400 text-xs mt-1 bg-amber-50 px-2 py-1 rounded-md">
+                <i class="fas fa-star mr-1"></i>
+                <span class="text-gray-700 font-medium">4.8</span>
+            </div>
+        </div>
+
+        <div class="flex items-center justify-between mt-4">
+            <div class="flex flex-col">
+                <span class="text-xs text-gray-500 line-through">₹3799</span>
+                <span class="text-xl font-bold text-gray-900">₹3499.00</span>
+            </div>
+
+            <button hx-post="/cart/add/" hx-swap="none"
+                hx-vals='{"product_id": "10", "quantity": 1}'
+                hx-headers='{"X-CSRFToken": "F8FHU5NOKgEPLkfcdBWHBHb3jHfRlycbqWkDc9CdVs6Kd4Z53dECjSNlnILfzGV4"}'
+                class="bg-purple-100 text-purple-700 hover:bg-purple-600 hover:text-white px-4 py-2 rounded-xl text-sm font-semibold transition-colors duration-300 flex items-center gap-2">
+                <i class="fas fa-shopping-bag text-xs"></i> Add
+            </button>
+        </div>
+    </div>
+</div>
+
+<div
+    class="bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 overflow-hidden group border border-gray-100 relative">
+
+    <!-- Badges -->
+    
+
+    <!-- Image Container with Aspect Ratio -->
+    <a href="/products/fresh-pineapple-pastry-cake/" class="block relative pt-[100%] overflow-hidden bg-gray-50">
+        
+        <img src="/media/products/pineapple_cake.png" alt="Fresh Pineapple Pastry Cake"
+            class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+        
+
+        <!-- Quick Actions Overlay -->
+        <div
+            class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-4">
+            <button
+                class="bg-white text-purple-600 w-10 h-10 rounded-full flex items-center justify-center hover:bg-purple-600 hover:text-white transition-colors transform translate-y-4 group-hover:translate-y-0 duration-300 shadow-lg"
+                title="Quick View">
+                <i class="fas fa-eye"></i>
+            </button>
+            <button
+                class="bg-white text-pink-500 w-10 h-10 rounded-full flex items-center justify-center hover:bg-pink-500 hover:text-white transition-colors transform translate-y-4 group-hover:translate-y-0 duration-300 delay-75 shadow-lg"
+                title="Add to Wishlist">
+                <i class="fas fa-heart"></i>
+            </button>
+        </div>
+    </a>
+
+    <!-- Product Details -->
+    <div class="p-5">
+        <div class="flex items-start justify-between mb-2">
+            <div>
+                <a href="/products/fresh-pineapple-pastry-cake/">
+                    <h3 class="text-lg font-bold text-gray-900 group-hover:text-purple-600 transition-colors line-clamp-1"
+                        title="Fresh Pineapple Pastry Cake">Fresh Pineapple Pastry Cake</h3>
+                </a>
+                <p class="text-sm text-gray-500 mb-1">Cakes</p>
+            </div>
+
+            <!-- Rating -->
+            <div class="flex items-center text-amber-400 text-xs mt-1 bg-amber-50 px-2 py-1 rounded-md">
+                <i class="fas fa-star mr-1"></i>
+                <span class="text-gray-700 font-medium">4.8</span>
+            </div>
+        </div>
+
+        <div class="flex items-center justify-between mt-4">
+            <div class="flex flex-col">
+                <span class="text-xs text-gray-500 line-through">₹999</span>
+                <span class="text-xl font-bold text-gray-900">₹699.00</span>
+            </div>
+
+            <button hx-post="/cart/add/" hx-swap="none"
+                hx-vals='{"product_id": "9", "quantity": 1}'
+                hx-headers='{"X-CSRFToken": "F8FHU5NOKgEPLkfcdBWHBHb3jHfRlycbqWkDc9CdVs6Kd4Z53dECjSNlnILfzGV4"}'
+                class="bg-purple-100 text-purple-700 hover:bg-purple-600 hover:text-white px-4 py-2 rounded-xl text-sm font-semibold transition-colors duration-300 flex items-center gap-2">
+                <i class="fas fa-shopping-bag text-xs"></i> Add
+            </button>
+        </div>
+    </div>
+</div>
+
+<div
+    class="bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 overflow-hidden group border border-gray-100 relative">
+
+    <!-- Badges -->
+    
+    <div
+        class="absolute top-4 left-4 z-10 bg-gradient-to-r from-amber-400 to-orange-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg flex items-center gap-1">
+        <i class="fas fa-fire text-[10px] animate-pulse"></i> Trending
+    </div>
+    
+
+    <!-- Image Container with Aspect Ratio -->
+    <a href="/products/premium-red-velvet-cake/" class="block relative pt-[100%] overflow-hidden bg-gray-50">
+        
+        <img src="/media/products/red_velvet_cake.png" alt="Premium Red Velvet Cake"
+            class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+        
+
+        <!-- Quick Actions Overlay -->
+        <div
+            class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-4">
+            <button
+                class="bg-white text-purple-600 w-10 h-10 rounded-full flex items-center justify-center hover:bg-purple-600 hover:text-white transition-colors transform translate-y-4 group-hover:translate-y-0 duration-300 shadow-lg"
+                title="Quick View">
+                <i class="fas fa-eye"></i>
+            </button>
+            <button
+                class="bg-white text-pink-500 w-10 h-10 rounded-full flex items-center justify-center hover:bg-pink-500 hover:text-white transition-colors transform translate-y-4 group-hover:translate-y-0 duration-300 delay-75 shadow-lg"
+                title="Add to Wishlist">
+                <i class="fas fa-heart"></i>
+            </button>
+        </div>
+    </a>
+
+    <!-- Product Details -->
+    <div class="p-5">
+        <div class="flex items-start justify-between mb-2">
+            <div>
+                <a href="/products/premium-red-velvet-cake/">
+                    <h3 class="text-lg font-bold text-gray-900 group-hover:text-purple-600 transition-colors line-clamp-1"
+                        title="Premium Red Velvet Cake">Premium Red Velvet Cake</h3>
+                </a>
+                <p class="text-sm text-gray-500 mb-1">Cakes</p>
+            </div>
+
+            <!-- Rating -->
+            <div class="flex items-center text-amber-400 text-xs mt-1 bg-amber-50 px-2 py-1 rounded-md">
+                <i class="fas fa-star mr-1"></i>
+                <span class="text-gray-700 font-medium">4.8</span>
+            </div>
+        </div>
+
+        <div class="flex items-center justify-between mt-4">
+            <div class="flex flex-col">
+                <span class="text-xs text-gray-500 line-through">₹1399</span>
+                <span class="text-xl font-bold text-gray-900">₹1099.00</span>
+            </div>
+
+            <button hx-post="/cart/add/" hx-swap="none"
+                hx-vals='{"product_id": "8", "quantity": 1}'
+                hx-headers='{"X-CSRFToken": "F8FHU5NOKgEPLkfcdBWHBHb3jHfRlycbqWkDc9CdVs6Kd4Z53dECjSNlnILfzGV4"}'
+                class="bg-purple-100 text-purple-700 hover:bg-purple-600 hover:text-white px-4 py-2 rounded-xl text-sm font-semibold transition-colors duration-300 flex items-center gap-2">
+                <i class="fas fa-shopping-bag text-xs"></i> Add
+            </button>
+        </div>
+    </div>
+</div>
+
+<div
+    class="bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 overflow-hidden group border border-gray-100 relative">
+
+    <!-- Badges -->
+    
+    <div
+        class="absolute top-4 left-4 z-10 bg-gradient-to-r from-amber-400 to-orange-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg flex items-center gap-1">
+        <i class="fas fa-fire text-[10px] animate-pulse"></i> Trending
+    </div>
+    
+
+    <!-- Image Container with Aspect Ratio -->
+    <a href="/products/gorgeous-purple-orchid-plant/" class="block relative pt-[100%] overflow-hidden bg-gray-50">
+        
+        <img src="/media/products/orchid_plant.png" alt="Gorgeous Purple Orchid Plant"
+            class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+        
+
+        <!-- Quick Actions Overlay -->
+        <div
+            class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-4">
+            <button
+                class="bg-white text-purple-600 w-10 h-10 rounded-full flex items-center justify-center hover:bg-purple-600 hover:text-white transition-colors transform translate-y-4 group-hover:translate-y-0 duration-300 shadow-lg"
+                title="Quick View">
+                <i class="fas fa-eye"></i>
+            </button>
+            <button
+                class="bg-white text-pink-500 w-10 h-10 rounded-full flex items-center justify-center hover:bg-pink-500 hover:text-white transition-colors transform translate-y-4 group-hover:translate-y-0 duration-300 delay-75 shadow-lg"
+                title="Add to Wishlist">
+                <i class="fas fa-heart"></i>
+            </button>
+        </div>
+    </a>
+
+    <!-- Product Details -->
+    <div class="p-5">
+        <div class="flex items-start justify-between mb-2">
+            <div>
+                <a href="/products/gorgeous-purple-orchid-plant/">
+                    <h3 class="text-lg font-bold text-gray-900 group-hover:text-purple-600 transition-colors line-clamp-1"
+                        title="Gorgeous Purple Orchid Plant">Gorgeous Purple Orchid Plant</h3>
+                </a>
+                <p class="text-sm text-gray-500 mb-1">Flowers</p>
+            </div>
+
+            <!-- Rating -->
+            <div class="flex items-center text-amber-400 text-xs mt-1 bg-amber-50 px-2 py-1 rounded-md">
+                <i class="fas fa-star mr-1"></i>
+                <span class="text-gray-700 font-medium">4.8</span>
+            </div>
+        </div>
+
+        <div class="flex items-center justify-between mt-4">
+            <div class="flex flex-col">
+                <span class="text-xs text-gray-500 line-through">₹1899</span>
+                <span class="text-xl font-bold text-gray-900">₹1599.00</span>
+            </div>
+
+            <button hx-post="/cart/add/" hx-swap="none"
+                hx-vals='{"product_id": "7", "quantity": 1}'
+                hx-headers='{"X-CSRFToken": "F8FHU5NOKgEPLkfcdBWHBHb3jHfRlycbqWkDc9CdVs6Kd4Z53dECjSNlnILfzGV4"}'
+                class="bg-purple-100 text-purple-700 hover:bg-purple-600 hover:text-white px-4 py-2 rounded-xl text-sm font-semibold transition-colors duration-300 flex items-center gap-2">
+                <i class="fas fa-shopping-bag text-xs"></i> Add
+            </button>
+        </div>
+    </div>
+</div>
+
+<div
+    class="bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 overflow-hidden group border border-gray-100 relative">
+
+    <!-- Badges -->
+    
+
+    <!-- Image Container with Aspect Ratio -->
+    <a href="/products/elegant-white-lilies-vase/" class="block relative pt-[100%] overflow-hidden bg-gray-50">
+        
+        <img src="/media/products/white_lilies.png" alt="Elegant White Lilies Vase"
+            class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+        
+
+        <!-- Quick Actions Overlay -->
+        <div
+            class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-4">
+            <button
+                class="bg-white text-purple-600 w-10 h-10 rounded-full flex items-center justify-center hover:bg-purple-600 hover:text-white transition-colors transform translate-y-4 group-hover:translate-y-0 duration-300 shadow-lg"
+                title="Quick View">
+                <i class="fas fa-eye"></i>
+            </button>
+            <button
+                class="bg-white text-pink-500 w-10 h-10 rounded-full flex items-center justify-center hover:bg-pink-500 hover:text-white transition-colors transform translate-y-4 group-hover:translate-y-0 duration-300 delay-75 shadow-lg"
+                title="Add to Wishlist">
+                <i class="fas fa-heart"></i>
+            </button>
+        </div>
+    </a>
+
+    <!-- Product Details -->
+    <div class="p-5">
+        <div class="flex items-start justify-between mb-2">
+            <div>
+                <a href="/products/elegant-white-lilies-vase/">
+                    <h3 class="text-lg font-bold text-gray-900 group-hover:text-purple-600 transition-colors line-clamp-1"
+                        title="Elegant White Lilies Vase">Elegant White Lilies Vase</h3>
+                </a>
+                <p class="text-sm text-gray-500 mb-1">Flowers</p>
+            </div>
+
+            <!-- Rating -->
+            <div class="flex items-center text-amber-400 text-xs mt-1 bg-amber-50 px-2 py-1 rounded-md">
+                <i class="fas fa-star mr-1"></i>
+                <span class="text-gray-700 font-medium">4.8</span>
+            </div>
+        </div>
+
+        <div class="flex items-center justify-between mt-4">
+            <div class="flex flex-col">
+                <span class="text-xs text-gray-500 line-through">₹1599</span>
+                <span class="text-xl font-bold text-gray-900">₹1299.00</span>
+            </div>
+
+            <button hx-post="/cart/add/" hx-swap="none"
+                hx-vals='{"product_id": "6", "quantity": 1}'
+                hx-headers='{"X-CSRFToken": "F8FHU5NOKgEPLkfcdBWHBHb3jHfRlycbqWkDc9CdVs6Kd4Z53dECjSNlnILfzGV4"}'
+                class="bg-purple-100 text-purple-700 hover:bg-purple-600 hover:text-white px-4 py-2 rounded-xl text-sm font-semibold transition-colors duration-300 flex items-center gap-2">
+                <i class="fas fa-shopping-bag text-xs"></i> Add
+            </button>
+        </div>
+    </div>
+</div>
+
+<div
+    class="bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 overflow-hidden group border border-gray-100 relative">
+
+    <!-- Badges -->
+    
+    <div
+        class="absolute top-4 left-4 z-10 bg-gradient-to-r from-amber-400 to-orange-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg flex items-center gap-1">
+        <i class="fas fa-fire text-[10px] animate-pulse"></i> Trending
+    </div>
+    
+
+    <!-- Image Container with Aspect Ratio -->
+    <a href="/products/romantic-anniversary-combo/" class="block relative pt-[100%] overflow-hidden bg-gray-50">
+        
+        <img src="/media/products/anniversary_combo.png" alt="Romantic Anniversary Combo"
+            class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+        
+
+        <!-- Quick Actions Overlay -->
+        <div
+            class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-4">
+            <button
+                class="bg-white text-purple-600 w-10 h-10 rounded-full flex items-center justify-center hover:bg-purple-600 hover:text-white transition-colors transform translate-y-4 group-hover:translate-y-0 duration-300 shadow-lg"
+                title="Quick View">
+                <i class="fas fa-eye"></i>
+            </button>
+            <button
+                class="bg-white text-pink-500 w-10 h-10 rounded-full flex items-center justify-center hover:bg-pink-500 hover:text-white transition-colors transform translate-y-4 group-hover:translate-y-0 duration-300 delay-75 shadow-lg"
+                title="Add to Wishlist">
+                <i class="fas fa-heart"></i>
+            </button>
+        </div>
+    </a>
+
+    <!-- Product Details -->
+    <div class="p-5">
+        <div class="flex items-start justify-between mb-2">
+            <div>
+                <a href="/products/romantic-anniversary-combo/">
+                    <h3 class="text-lg font-bold text-gray-900 group-hover:text-purple-600 transition-colors line-clamp-1"
+                        title="Romantic Anniversary Combo">Romantic Anniversary Combo</h3>
+                </a>
+                <p class="text-sm text-gray-500 mb-1">Occasions</p>
+            </div>
+
+            <!-- Rating -->
+            <div class="flex items-center text-amber-400 text-xs mt-1 bg-amber-50 px-2 py-1 rounded-md">
+                <i class="fas fa-star mr-1"></i>
+                <span class="text-gray-700 font-medium">4.8</span>
+            </div>
+        </div>
+
+        <div class="flex items-center justify-between mt-4">
+            <div class="flex flex-col">
+                <span class="text-xs text-gray-500 line-through">₹2799</span>
+                <span class="text-xl font-bold text-gray-900">₹2499.00</span>
+            </div>
+
+            <button hx-post="/cart/add/" hx-swap="none"
+                hx-vals='{"product_id": "5", "quantity": 1}'
+                hx-headers='{"X-CSRFToken": "F8FHU5NOKgEPLkfcdBWHBHb3jHfRlycbqWkDc9CdVs6Kd4Z53dECjSNlnILfzGV4"}'
+                class="bg-purple-100 text-purple-700 hover:bg-purple-600 hover:text-white px-4 py-2 rounded-xl text-sm font-semibold transition-colors duration-300 flex items-center gap-2">
+                <i class="fas fa-shopping-bag text-xs"></i> Add
+            </button>
+        </div>
+    </div>
+</div>
+
+<div
+    class="bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 overflow-hidden group border border-gray-100 relative">
+
+    <!-- Badges -->
+    
+
+    <!-- Image Container with Aspect Ratio -->
+    <a href="/products/classic-black-forest/" class="block relative pt-[100%] overflow-hidden bg-gray-50">
+        
+        <img src="/media/products/black_forest.png" alt="Classic Black Forest"
+            class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+        
+
+        <!-- Quick Actions Overlay -->
+        <div
+            class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-4">
+            <button
+                class="bg-white text-purple-600 w-10 h-10 rounded-full flex items-center justify-center hover:bg-purple-600 hover:text-white transition-colors transform translate-y-4 group-hover:translate-y-0 duration-300 shadow-lg"
+                title="Quick View">
+                <i class="fas fa-eye"></i>
+            </button>
+            <button
+                class="bg-white text-pink-500 w-10 h-10 rounded-full flex items-center justify-center hover:bg-pink-500 hover:text-white transition-colors transform translate-y-4 group-hover:translate-y-0 duration-300 delay-75 shadow-lg"
+                title="Add to Wishlist">
+                <i class="fas fa-heart"></i>
+            </button>
+        </div>
+    </a>
+
+    <!-- Product Details -->
+    <div class="p-5">
+        <div class="flex items-start justify-between mb-2">
+            <div>
+                <a href="/products/classic-black-forest/">
+                    <h3 class="text-lg font-bold text-gray-900 group-hover:text-purple-600 transition-colors line-clamp-1"
+                        title="Classic Black Forest">Classic Black Forest</h3>
+                </a>
+                <p class="text-sm text-gray-500 mb-1">Cakes</p>
+            </div>
+
+            <!-- Rating -->
+            <div class="flex items-center text-amber-400 text-xs mt-1 bg-amber-50 px-2 py-1 rounded-md">
+                <i class="fas fa-star mr-1"></i>
+                <span class="text-gray-700 font-medium">4.8</span>
+            </div>
+        </div>
+
+        <div class="flex items-center justify-between mt-4">
+            <div class="flex flex-col">
+                <span class="text-xs text-gray-500 line-through">₹1099</span>
+                <span class="text-xl font-bold text-gray-900">₹799.00</span>
+            </div>
+
+            <button hx-post="/cart/add/" hx-swap="none"
+                hx-vals='{"product_id": "4", "quantity": 1}'
+                hx-headers='{"X-CSRFToken": "F8FHU5NOKgEPLkfcdBWHBHb3jHfRlycbqWkDc9CdVs6Kd4Z53dECjSNlnILfzGV4"}'
+                class="bg-purple-100 text-purple-700 hover:bg-purple-600 hover:text-white px-4 py-2 rounded-xl text-sm font-semibold transition-colors duration-300 flex items-center gap-2">
+                <i class="fas fa-shopping-bag text-xs"></i> Add
+            </button>
+        </div>
+    </div>
+</div>
+
+<div
+    class="bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 overflow-hidden group border border-gray-100 relative">
+
+    <!-- Badges -->
+    
+    <div
+        class="absolute top-4 left-4 z-10 bg-gradient-to-r from-amber-400 to-orange-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg flex items-center gap-1">
+        <i class="fas fa-fire text-[10px] animate-pulse"></i> Trending
+    </div>
+    
+
+    <!-- Image Container with Aspect Ratio -->
+    <a href="/products/dutch-chocolate-truffle-cake/" class="block relative pt-[100%] overflow-hidden bg-gray-50">
+        
+        <img src="/media/products/chocolate_cake.png" alt="Dutch Chocolate Truffle Cake"
+            class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+        
+
+        <!-- Quick Actions Overlay -->
+        <div
+            class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-4">
+            <button
+                class="bg-white text-purple-600 w-10 h-10 rounded-full flex items-center justify-center hover:bg-purple-600 hover:text-white transition-colors transform translate-y-4 group-hover:translate-y-0 duration-300 shadow-lg"
+                title="Quick View">
+                <i class="fas fa-eye"></i>
+            </button>
+            <button
+                class="bg-white text-pink-500 w-10 h-10 rounded-full flex items-center justify-center hover:bg-pink-500 hover:text-white transition-colors transform translate-y-4 group-hover:translate-y-0 duration-300 delay-75 shadow-lg"
+                title="Add to Wishlist">
+                <i class="fas fa-heart"></i>
+            </button>
+        </div>
+    </a>
+
+    <!-- Product Details -->
+    <div class="p-5">
+        <div class="flex items-start justify-between mb-2">
+            <div>
+                <a href="/products/dutch-chocolate-truffle-cake/">
+                    <h3 class="text-lg font-bold text-gray-900 group-hover:text-purple-600 transition-colors line-clamp-1"
+                        title="Dutch Chocolate Truffle Cake">Dutch Chocolate Truffle Cake</h3>
+                </a>
+                <p class="text-sm text-gray-500 mb-1">Cakes</p>
+            </div>
+
+            <!-- Rating -->
+            <div class="flex items-center text-amber-400 text-xs mt-1 bg-amber-50 px-2 py-1 rounded-md">
+                <i class="fas fa-star mr-1"></i>
+                <span class="text-gray-700 font-medium">4.8</span>
+            </div>
+        </div>
+
+        <div class="flex items-center justify-between mt-4">
+            <div class="flex flex-col">
+                <span class="text-xs text-gray-500 line-through">₹1199</span>
+                <span class="text-xl font-bold text-gray-900">₹899.00</span>
+            </div>
+
+            <button hx-post="/cart/add/" hx-swap="none"
+                hx-vals='{"product_id": "3", "quantity": 1}'
+                hx-headers='{"X-CSRFToken": "F8FHU5NOKgEPLkfcdBWHBHb3jHfRlycbqWkDc9CdVs6Kd4Z53dECjSNlnILfzGV4"}'
+                class="bg-purple-100 text-purple-700 hover:bg-purple-600 hover:text-white px-4 py-2 rounded-xl text-sm font-semibold transition-colors duration-300 flex items-center gap-2">
+                <i class="fas fa-shopping-bag text-xs"></i> Add
+            </button>
+        </div>
+    </div>
+</div>
+
+<div
+    class="bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 overflow-hidden group border border-gray-100 relative">
+
+    <!-- Badges -->
+    
+
+    <!-- Image Container with Aspect Ratio -->
+    <a href="/products/mixed-floral-basket/" class="block relative pt-[100%] overflow-hidden bg-gray-50">
+        
+        <img src="/media/products/mixed_basket.png" alt="Mixed Floral Basket"
+            class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+        
+
+        <!-- Quick Actions Overlay -->
+        <div
+            class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-4">
+            <button
+                class="bg-white text-purple-600 w-10 h-10 rounded-full flex items-center justify-center hover:bg-purple-600 hover:text-white transition-colors transform translate-y-4 group-hover:translate-y-0 duration-300 shadow-lg"
+                title="Quick View">
+                <i class="fas fa-eye"></i>
+            </button>
+            <button
+                class="bg-white text-pink-500 w-10 h-10 rounded-full flex items-center justify-center hover:bg-pink-500 hover:text-white transition-colors transform translate-y-4 group-hover:translate-y-0 duration-300 delay-75 shadow-lg"
+                title="Add to Wishlist">
+                <i class="fas fa-heart"></i>
+            </button>
+        </div>
+    </a>
+
+    <!-- Product Details -->
+    <div class="p-5">
+        <div class="flex items-start justify-between mb-2">
+            <div>
+                <a href="/products/mixed-floral-basket/">
+                    <h3 class="text-lg font-bold text-gray-900 group-hover:text-purple-600 transition-colors line-clamp-1"
+                        title="Mixed Floral Basket">Mixed Floral Basket</h3>
+                </a>
+                <p class="text-sm text-gray-500 mb-1">Flowers</p>
+            </div>
+
+            <!-- Rating -->
+            <div class="flex items-center text-amber-400 text-xs mt-1 bg-amber-50 px-2 py-1 rounded-md">
+                <i class="fas fa-star mr-1"></i>
+                <span class="text-gray-700 font-medium">4.8</span>
+            </div>
+        </div>
+
+        <div class="flex items-center justify-between mt-4">
+            <div class="flex flex-col">
+                <span class="text-xs text-gray-500 line-through">₹1799</span>
+                <span class="text-xl font-bold text-gray-900">₹1499.00</span>
+            </div>
+
+            <button hx-post="/cart/add/" hx-swap="none"
+                hx-vals='{"product_id": "2", "quantity": 1}'
+                hx-headers='{"X-CSRFToken": "F8FHU5NOKgEPLkfcdBWHBHb3jHfRlycbqWkDc9CdVs6Kd4Z53dECjSNlnILfzGV4"}'
+                class="bg-purple-100 text-purple-700 hover:bg-purple-600 hover:text-white px-4 py-2 rounded-xl text-sm font-semibold transition-colors duration-300 flex items-center gap-2">
+                <i class="fas fa-shopping-bag text-xs"></i> Add
+            </button>
+        </div>
+    </div>
+</div>
+
+<div
+    class="bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 overflow-hidden group border border-gray-100 relative">
+
+    <!-- Badges -->
+    
+    <div
+        class="absolute top-4 left-4 z-10 bg-gradient-to-r from-amber-400 to-orange-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg flex items-center gap-1">
+        <i class="fas fa-fire text-[10px] animate-pulse"></i> Trending
+    </div>
+    
+
+    <!-- Image Container with Aspect Ratio -->
+    <a href="/products/premium-red-roses-bouquet/" class="block relative pt-[100%] overflow-hidden bg-gray-50">
+        
+        <img src="/media/products/red_roses.png" alt="Premium Red Roses Bouquet"
+            class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+        
+
+        <!-- Quick Actions Overlay -->
+        <div
+            class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-4">
+            <button
+                class="bg-white text-purple-600 w-10 h-10 rounded-full flex items-center justify-center hover:bg-purple-600 hover:text-white transition-colors transform translate-y-4 group-hover:translate-y-0 duration-300 shadow-lg"
+                title="Quick View">
+                <i class="fas fa-eye"></i>
+            </button>
+            <button
+                class="bg-white text-pink-500 w-10 h-10 rounded-full flex items-center justify-center hover:bg-pink-500 hover:text-white transition-colors transform translate-y-4 group-hover:translate-y-0 duration-300 delay-75 shadow-lg"
+                title="Add to Wishlist">
+                <i class="fas fa-heart"></i>
+            </button>
+        </div>
+    </a>
+
+    <!-- Product Details -->
+    <div class="p-5">
+        <div class="flex items-start justify-between mb-2">
+            <div>
+                <a href="/products/premium-red-roses-bouquet/">
+                    <h3 class="text-lg font-bold text-gray-900 group-hover:text-purple-600 transition-colors line-clamp-1"
+                        title="Premium Red Roses Bouquet">Premium Red Roses Bouquet</h3>
+                </a>
+                <p class="text-sm text-gray-500 mb-1">Flowers</p>
+            </div>
+
+            <!-- Rating -->
+            <div class="flex items-center text-amber-400 text-xs mt-1 bg-amber-50 px-2 py-1 rounded-md">
+                <i class="fas fa-star mr-1"></i>
+                <span class="text-gray-700 font-medium">4.8</span>
+            </div>
+        </div>
+
+        <div class="flex items-center justify-between mt-4">
+            <div class="flex flex-col">
+                <span class="text-xs text-gray-500 line-through">₹1299</span>
+                <span class="text-xl font-bold text-gray-900">₹999.00</span>
+            </div>
+
+            <button hx-post="/cart/add/" hx-swap="none"
+                hx-vals='{"product_id": "1", "quantity": 1}'
+                hx-headers='{"X-CSRFToken": "F8FHU5NOKgEPLkfcdBWHBHb3jHfRlycbqWkDc9CdVs6Kd4Z53dECjSNlnILfzGV4"}'
+                class="bg-purple-100 text-purple-700 hover:bg-purple-600 hover:text-white px-4 py-2 rounded-xl text-sm font-semibold transition-colors duration-300 flex items-center gap-2">
+                <i class="fas fa-shopping-bag text-xs"></i> Add
+            </button>
+        </div>
+    </div>
+</div>
+
+
+<!-- Pagination (HTMX driven) -->
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Custom Scrollbar for Filters Menu */
+    .custom-scrollbar::-webkit-scrollbar {
+        width: 4px;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        border-radius: 4px;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+        background: #d8b4fe;
+        border-radius: 4px;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+        background: #9333ea;
+    }
+</style>
+
+    </main>
+
+    <!-- Toast Container (for HTMX notifications) -->
+    <div id="toast-container" class="fixed bottom-4 right-4 z-50"></div>
+
+    <!-- Beautiful Footer with Decorative Images -->
+    <footer class="bg-gradient-to-br from-purple-900 via-purple-800 to-pink-900 text-white relative overflow-hidden">
+        <!-- Animated background decorations -->
+        <div class="absolute inset-0 opacity-10">
+            <i class="fas fa-flower absolute top-20 left-10 text-6xl text-purple-300 animate-float"></i>
+            <i class="fas fa-heart absolute top-40 right-20 text-5xl text-pink-300 animate-bounce-slow"></i>
+            <i class="fas fa-star absolute bottom-20 left-1/3 text-4xl text-amber-300 animate-wiggle"></i>
+            <i class="fas fa-gift absolute bottom-40 right-1/4 text-6xl text-purple-300 animate-float"
+                style="animation-delay: 0.5s;"></i>
+            <i class="fas fa-leaf absolute top-1/2 left-5 text-5xl text-green-300 animate-float"
+                style="animation-delay: 1s;"></i>
+        </div>
+
+        <div class="container mx-auto px-4 py-12 relative z-10">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12 mb-8">
+                <!-- Brand Section -->
+                <div class="text-center sm:text-left">
+                    <div class="flex items-center justify-center sm:justify-start space-x-2 mb-4">
+                        <i class="fas fa-crown text-amber-400 text-3xl animate-pulse"></i>
+                        <h3 class="text-2xl font-playfair font-bold">Nikki Flower & Cake</h3>
+                    </div>
+                    <p class="text-purple-200 text-sm mb-4">Premium flowers and cakes delivered with love across India.
+                    </p>
+                    <div class="flex justify-center sm:justify-start space-x-3">
+                        <a href="#"
+                            class="bg-white/10 hover:bg-white/20 p-2 rounded-full transition-all duration-300 transform hover:scale-110">
+                            <i class="fab fa-facebook-f text-xl"></i>
+                        </a>
+                        <a href="#"
+                            class="bg-white/10 hover:bg-white/20 p-2 rounded-full transition-all duration-300 transform hover:scale-110">
+                            <i class="fab fa-instagram text-xl"></i>
+                        </a>
+                        <a href="#"
+                            class="bg-white/10 hover:bg-white/20 p-2 rounded-full transition-all duration-300 transform hover:scale-110">
+                            <i class="fab fa-twitter text-xl"></i>
+                        </a>
+                        <a href="#"
+                            class="bg-white/10 hover:bg-white/20 p-2 rounded-full transition-all duration-300 transform hover:scale-110">
+                            <i class="fab fa-whatsapp text-xl"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <div class="text-center sm:text-left">
+                    <h4 class="font-semibold text-lg mb-4 flex items-center justify-center sm:justify-start">
+                        <i class="fas fa-link text-amber-400 mr-2 animate-wiggle"></i>
+                        Quick Links
+                    </h4>
+                    <ul class="space-y-2">
+                        <li><a href="/about/"
+                                class="text-purple-200 hover:text-amber-400 transition-colors flex items-center justify-center sm:justify-start"><i
+                                    class="fas fa-chevron-right text-xs mr-2 animate-pulse"></i>About Us</a></li>
+                        <li><a href="/contact/"
+                                class="text-purple-200 hover:text-amber-400 transition-colors flex items-center justify-center sm:justify-start"><i
+                                    class="fas fa-chevron-right text-xs mr-2 animate-pulse"></i>Contact</a></li>
+                        <li><a href="#"
+                                class="text-purple-200 hover:text-amber-400 transition-colors flex items-center justify-center sm:justify-start"><i
+                                    class="fas fa-chevron-right text-xs mr-2 animate-pulse"></i>FAQs</a></li>
+                        <li><a href="#"
+                                class="text-purple-200 hover:text-amber-400 transition-colors flex items-center justify-center sm:justify-start"><i
+                                    class="fas fa-chevron-right text-xs mr-2 animate-pulse"></i>Privacy Policy</a></li>
+                    </ul>
+                </div>
+
+                <!-- Categories -->
+                <div class="text-center sm:text-left">
+                    <h4 class="font-semibold text-lg mb-4 flex items-center justify-center sm:justify-start">
+                        <i class="fas fa-th-large text-amber-400 mr-2 animate-trending-rotate"
+                            style="animation-duration: 20s;"></i>
+                        Categories
+                    </h4>
+                    <ul class="space-y-2">
+                        <li><a href="/products/?category=flowers"
+                                class="text-purple-200 hover:text-amber-400 transition-colors flex items-center justify-center sm:justify-start"><i
+                                    class="fas fa-chevron-right text-xs mr-2 animate-pulse"></i>Fresh Flowers</a></li>
+                        <li><a href="/products/?category=cakes"
+                                class="text-purple-200 hover:text-amber-400 transition-colors flex items-center justify-center sm:justify-start"><i
+                                    class="fas fa-chevron-right text-xs mr-2 animate-pulse"></i>Artisan Cakes</a></li>
+                        <li><a href="/products/?category=combos"
+                                class="text-purple-200 hover:text-amber-400 transition-colors flex items-center justify-center sm:justify-start"><i
+                                    class="fas fa-chevron-right text-xs mr-2 animate-pulse"></i>Special Combos</a></li>
+                        <li><a href="/products/?category=occasions"
+                                class="text-purple-200 hover:text-amber-400 transition-colors flex items-center justify-center sm:justify-start"><i
+                                    class="fas fa-chevron-right text-xs mr-2 animate-pulse"></i>Occasions</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact Info -->
+                <div class="text-center sm:text-left">
+                    <h4 class="font-semibold text-lg mb-4 flex items-center justify-center sm:justify-start">
+                        <i class="fas fa-headset text-amber-400 mr-2 animate-heartbeat"></i>
+                        Support
+                    </h4>
+                    <ul class="space-y-2 text-purple-200">
+                        <li class="flex items-center justify-center sm:justify-start"><i
+                                class="fas fa-phone text-amber-400 mr-2 animate-pulse"></i>+91 98765 43210</li>
+                        <li class="flex items-center justify-center sm:justify-start"><i
+                                class="fas fa-envelope text-amber-400 mr-2 animate-pulse"></i>hello@nikkiflowercake.com
+                        </li>
+                        <li class="flex items-center justify-center sm:justify-start"><i
+                                class="fas fa-clock text-amber-400 mr-2 animate-pulse"></i>9 AM - 9 PM IST</li>
+                        <li class="flex items-center justify-center sm:justify-start"><i
+                                class="fas fa-map-marker-alt text-amber-400 mr-2 animate-pulse"></i>Mumbai, India</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Bottom Bar with Decorative Elements -->
+            <div class="border-t border-purple-700/50 pt-8 mt-8">
+                <div class="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+                    <div class="text-purple-300 text-sm text-center sm:text-left">
+                        <p>&copy; 2024 Nikki Flower & Cake. Made with <i
+                                class="fas fa-heart text-red-500 animate-heartbeat"></i> in India</p>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <img src="/static/images/placeholder-product.jpg" alt="Payment Methods"
+                            class="h-8 rounded opacity-70 hover:opacity-100 transition-opacity">
+                        <span class="text-purple-300 text-sm">Secure Payments via Razorpay</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+
+
+    <!-- AOS Animation JS -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // Initialize AOS animations
+        document.addEventListener('DOMContentLoaded', function () {
+            AOS.init({
+                duration: 800,
+                once: true,
+                offset: 50,
+                easing: 'ease-out-cubic'
+            });
+        });
+
+        // HTMX config
+        document.body.addEventListener('htmx:configRequest', (event) => {
+            event.detail.headers['X-CSRFToken'] = 'F8FHU5NOKgEPLkfcdBWHBHb3jHfRlycbqWkDc9CdVs6Kd4Z53dECjSNlnILfzGV4';
+        });
+    </script>
+
+    
+</body>
+
+</html>

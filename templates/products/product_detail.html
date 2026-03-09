@@ -1,0 +1,131 @@
+{% extends "base.html" %}
+
+{% block title %}{{ product.name }} | Nikki Flower &amp; Cake{% endblock %}
+
+{% block content %}
+  <div class="grid gap-8 md:grid-cols-2">
+    <div class="overflow-hidden rounded-3xl bg-white shadow-lg shadow-slate-200">
+      <img
+        src="{{ product.primary_image.url }}"
+        alt="{{ product.name }}"
+        class="h-full w-full object-cover"
+      />
+    </div>
+
+    <div class="space-y-4">
+      <div>
+        <h1 class="text-2xl font-semibold tracking-tight text-slate-900 sm:text-3xl">
+          {{ product.name }}
+        </h1>
+        {% if product.short_description %}
+          <p class="mt-1 text-sm text-slate-500">
+            {{ product.short_description }}
+          </p>
+        {% endif %}
+      </div>
+
+      <section class="space-y-4">
+        <form id="product-config">
+          <div class="space-y-2">
+            <p class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">
+              Select size
+            </p>
+            <div class="flex flex-wrap gap-2">
+              {% for variant in product.variants.all %}
+                <label
+                  class="inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-sm font-medium cursor-pointer transition data-[active=true]:border-rose-500 data-[active=true]:bg-rose-50"
+                >
+                  <input
+                    type="radio"
+                    name="variant"
+                    value="{{ variant.id }}"
+                    {% if forloop.first %}checked{% endif %}
+                    class="peer sr-only"
+                    hx-get="{% url 'products:variant_price_fragment' variant.id %}"
+                    hx-target="#price-fragment"
+                    hx-include="#product-config"
+                    hx-trigger="change"
+                  />
+                  <span>{{ variant.name }}</span>
+                </label>
+              {% endfor %}
+            </div>
+          </div>
+
+          <div id="price-fragment" class="mt-4">
+            {% with first_variant=product.variants.all.0 %}
+              {% if first_variant %}
+                {% include "products/partials/variant_price_fragment.html" with variant=first_variant addons=None total_price=first_variant.final_price %}
+              {% else %}
+                {% include "products/partials/variant_price_fragment.html" with variant=product addons=None total_price=product.current_price %}
+              {% endif %}
+            {% endwith %}
+          </div>
+
+          <div class="mt-4 flex items-center gap-3">
+            <div class="inline-flex items-center rounded-full border px-2 py-1">
+              <button type="button" onclick="stepQty(-1)" class="px-2 text-slate-500">−</button>
+              <input
+                id="qty-input"
+                type="number"
+                name="quantity"
+                value="1"
+                min="1"
+                class="w-10 border-0 text-center text-sm focus:ring-0"
+              />
+              <button type="button" onclick="stepQty(1)" class="px-2 text-slate-500">+</button>
+            </div>
+
+            <button
+              type="button"
+              onclick="submitAddToCart(event)"
+              class="inline-flex items-center gap-2 rounded-full bg-rose-500 px-7 py-2.5 text-sm font-semibold text-white shadow-lg shadow-rose-500/40"
+            >
+              Add to Cart
+            </button>
+          </div>
+        </form>
+      </section>
+    </div>
+  </div>
+
+  <script>
+    function stepQty(delta) {
+      const input = document.getElementById("qty-input");
+      const current = parseInt(input.value || "1", 10);
+      const next = Math.max(1, current + delta);
+      input.value = next;
+    }
+
+    async function submitAddToCart(event) {
+      const form = document.getElementById("product-config");
+      const formData = new FormData(form);
+      const variantId = formData.get("variant");
+      if (!variantId) return;
+
+      const payload = new URLSearchParams();
+      payload.append("product_id", "{{ product.id }}");
+      payload.append("variant_id", variantId);
+      payload.append("quantity", formData.get("quantity") || "1");
+
+      const res = await fetch("{% url 'cart:add' %}", {
+        method: "POST",
+        headers: {
+          "X-CSRFToken": getCookie("csrftoken"),
+          "X-Requested-With": "XMLHttpRequest",
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: payload.toString(),
+      });
+      const data = await res.json();
+      if (data.ok) {
+        const badge = document.querySelector("#mini-cart-count");
+        if (badge) badge.textContent = data.cart_count;
+        showToast(data.message);
+      } else {
+        showToast("Could not add to cart.");
+      }
+    }
+  </script>
+{% endblock %}
+

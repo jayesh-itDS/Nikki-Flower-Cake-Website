@@ -1,0 +1,160 @@
+<article
+  class="group relative flex flex-col overflow-hidden rounded-3xl bg-white/80 shadow-[0_18px_45px_rgba(15,23,42,0.15)] ring-1 ring-slate-100 backdrop-blur transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_25px_60px_rgba(15,23,42,0.20)]"
+>
+  <div class="relative aspect-[4/5] overflow-hidden">
+    <a href="{{ product.get_absolute_url }}">
+      <img
+        src="{{ product.primary_image.url }}"
+        alt="{{ product.name }}"
+        class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+      />
+    </a>
+
+    <div
+      class="pointer-events-none absolute inset-0 bg-gradient-to-t from-slate-900/70 via-slate-900/10 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+    ></div>
+
+    {% with occ=product.occasions.all.0 %}
+      {% if occ %}
+        <span
+          class="absolute left-4 top-4 inline-flex items-center gap-1 rounded-full bg-white/90 px-3 py-1 text-xs font-medium text-slate-800 shadow-sm"
+        >
+          <span class="h-1.5 w-1.5 rounded-full bg-rose-500"></span>
+          {{ occ.name }}
+        </span>
+      {% endif %}
+    {% endwith %}
+
+    {% if product.is_featured %}
+      <span class="absolute right-4 top-4 rounded-full bg-rose-500 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-white shadow-md">
+        Featured
+      </span>
+    {% endif %}
+
+    {% with default_variant=product.variants.all.0 %}
+      {% if default_variant %}
+        <button
+          type="button"
+          onclick="handleAddToCart(event)"
+          data-product-id="{{ product.id }}"
+          data-variant-id="{{ default_variant.id }}"
+          class="absolute bottom-4 left-1/2 flex -translate-x-1/2 items-center gap-2 rounded-full bg-rose-500 px-6 py-2.5 text-sm font-semibold text-white shadow-lg shadow-rose-500/40 opacity-0 backdrop-blur transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100"
+        >
+          <span class="inline-block h-1.5 w-1.5 rounded-full bg-white"></span>
+          Add to Cart
+        </button>
+      {% endif %}
+    {% endwith %}
+  </div>
+
+  <div class="flex flex-1 flex-col px-4 pb-4 pt-3 sm:px-5 sm:pb-5">
+    <div class="mb-1 flex items-center justify-between gap-2">
+      <h3 class="line-clamp-1 text-sm font-semibold text-slate-900 sm:text-base">
+        <a href="{{ product.get_absolute_url }}" class="hover:text-rose-500">
+          {{ product.name }}
+        </a>
+      </h3>
+
+      {% if product.rating %}
+        <div class="flex items-center gap-1 text-xs text-amber-500">
+          <svg
+            class="h-4 w-4 fill-current"
+            viewBox="0 0 20 20"
+            aria-hidden="true"
+          >
+            <path
+              d="M10 1.5 12.47 7l5.53.4-4.2 3.57 1.3 5.53L10 13.98 4.9 16.5l1.3-5.53L2 7.4 7.53 7 10 1.5Z"
+            />
+          </svg>
+          <span>{{ product.rating|floatformat:1 }}</span>
+        </div>
+      {% endif %}
+    </div>
+
+    <p class="mb-3 line-clamp-2 text-xs text-slate-500 sm:text-sm">
+      {{ product.short_description }}
+    </p>
+
+    <div class="mt-auto flex items-end justify-between gap-3">
+      <div class="flex flex-col">
+        <span class="text-xs uppercase tracking-[0.18em] text-slate-400">
+          Starting from
+        </span>
+        <div class="flex items-baseline gap-1.5">
+          <span class="text-lg font-semibold text-slate-900 sm:text-xl">
+            ₹{{ product.current_price }}
+          </span>
+          {% if product.is_on_sale %}
+            <span class="text-xs text-slate-400 line-through">
+              ₹{{ product.base_price }}
+            </span>
+          {% endif %}
+        </div>
+      </div>
+
+      <div class="flex items-center gap-1.5">
+        {% for variant in product.variants.all|slice:":3" %}
+          <span
+            class="whitespace-nowrap rounded-full border border-slate-200 px-2.5 py-1 text-[11px] font-medium text-slate-600"
+          >
+            {{ variant.name }}
+          </span>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</article>
+
+<script>
+  async function handleAddToCart(event) {
+    event.preventDefault();
+    const button = event.currentTarget;
+    const productId = button.dataset.productId;
+    const variantId = button.dataset.variantId || "";
+    if (!productId) return;
+
+    const payload = new URLSearchParams({
+      product_id: productId,
+      quantity: "1",
+    });
+    if (variantId) {
+      payload.append("variant_id", variantId);
+    }
+
+    button.disabled = true;
+    button.classList.add("opacity-70");
+
+    try {
+      const response = await fetch("{% url 'cart:add' %}", {
+        method: "POST",
+        headers: {
+          "X-CSRFToken": getCookie("csrftoken"),
+          "X-Requested-With": "XMLHttpRequest",
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: payload.toString(),
+      });
+
+      const data = await response.json();
+
+      if (data.ok) {
+        const cartBadge = document.querySelector("#mini-cart-count");
+        if (cartBadge) {
+          cartBadge.textContent = data.cart_count;
+          cartBadge.classList.add("scale-110");
+          setTimeout(() => cartBadge.classList.remove("scale-110"), 150);
+        }
+        showToast(data.message || "Added to cart");
+      } else {
+        showToast("Could not add to cart. Please try again.");
+      }
+    } catch (e) {
+      console.error(e);
+      showToast("Something went wrong. Please try again.");
+    } finally {
+      button.disabled = false;
+      button.classList.remove("opacity-70");
+    }
+  }
+</script>
+

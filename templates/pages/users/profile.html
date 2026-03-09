@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block title %}Profile - Nikki Flower & Cake{% endblock %}
+
+{% block content %}
+<div class="min-h-screen bg-gray-50 py-12">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="bg-white shadow rounded-lg">
+            <div class="px-4 py-5 sm:px-6 border-b border-gray-200">
+                <h3 class="text-lg leading-6 font-medium text-gray-900">Your Profile</h3>
+                <p class="mt-1 max-w-2xl text-sm text-gray-500">Personal details and account information.</p>
+            </div>
+            <div class="px-4 py-5 sm:p-6">
+                <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Name</label>
+                        <p class="mt-1 text-sm text-gray-900">{{ user.get_full_name|default:user.email }}</p>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Email</label>
+                        <p class="mt-1 text-sm text-gray-900">{{ user.email }}</p>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Phone Number</label>
+                        <p class="mt-1 text-sm text-gray-900">{{ user.phone_number|default:"Not provided" }}</p>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Member Since</label>
+                        <p class="mt-1 text-sm text-gray-900">{{ user.date_joined|date:"F d, Y" }}</p>
+                    </div>
+                </div>
+                
+                <div class="mt-8">
+                    <h4 class="text-md font-medium text-gray-900 mb-4">Account Options</h4>
+                    <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                        <a href="#" class="block px-4 py-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
+                            <h5 class="font-medium text-gray-900">Order History</h5>
+                            <p class="text-sm text-gray-500">View your past orders and track shipments</p>
+                        </a>
+                        <a href="#" class="block px-4 py-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
+                            <h5 class="font-medium text-gray-900">Saved Addresses</h5>
+                            <p class="text-sm text-gray-500">Manage your delivery addresses</p>
+                        </a>
+                        <a href="#" class="block px-4 py-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
+                            <h5 class="font-medium text-gray-900">Wishlist</h5>
+                            <p class="text-sm text-gray-500">Your favorite products</p>
+                        </a>
+                        <a href="#" class="block px-4 py-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
+                            <h5 class="font-medium text-gray-900">Account Settings</h5>
+                            <p class="text-sm text-gray-500">Update your preferences</p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

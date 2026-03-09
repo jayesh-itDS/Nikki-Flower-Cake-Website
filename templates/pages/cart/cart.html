@@ -1,0 +1,283 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Shopping Cart - Nikki Flower & Cake{% endblock %}
+
+{% block content %}
+<div class="min-h-screen bg-gray-50 py-12">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="bg-white shadow rounded-lg">
+            <div class="px-4 py-5 sm:px-6 border-b border-gray-200">
+                <h3 class="text-lg leading-6 font-medium text-gray-900">Your Shopping Cart</h3>
+                <p class="mt-1 max-w-2xl text-sm text-gray-500">Review and manage items in your cart</p>
+            </div>
+            <div class="px-4 py-5 sm:p-6">
+                {% if cart_items %}
+                <div class="overflow-hidden">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th scope="col"
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Product</th>
+                                <th scope="col"
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Price</th>
+                                <th scope="col"
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Quantity</th>
+                                <th scope="col"
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Total</th>
+                                <th scope="col"
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                            {% for item in cart_items %}
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="flex items-center">
+                                        <div class="flex-shrink-0 h-20 w-20">
+                                            <img class="h-20 w-20 rounded-md object-cover"
+                                                src="{% static 'images/placeholder-product.jpg' %}"
+                                                alt="{{ item.product.name }}">
+                                        </div>
+                                        <div class="ml-4">
+                                            <div class="text-sm font-medium text-gray-900">{{ item.product.name }}</div>
+                                            {% if item.variant %}
+                                            <div class="text-sm text-gray-500">{{ item.variant.name }}</div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">₹{{ item.unit_price }}
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="flex items-center">
+                                        <button class="quantity-btn bg-gray-200 text-gray-600 px-3 py-1 rounded-l"
+                                            data-action="decrement">-</button>
+                                        <input type="number" min="1" value="{{ item.quantity }}"
+                                            class="quantity-input w-12 text-center border-t border-b border-gray-200">
+                                        <button class="quantity-btn bg-gray-200 text-gray-600 px-3 py-1 rounded-r"
+                                            data-action="increment">+</button>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">₹{{ item.total_price }}
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                    <button class="remove-item-btn text-red-600 hover:text-red-900"
+                                        data-item-id="{{ item.id }}">Remove</button>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+                <div
+                    class="mt-8 flex flex-col sm:flex-row justify-between items-start sm:items-center space-y-4 sm:space-y-0">
+                    <div>
+                        <input type="text" id="coupon-code" placeholder="Enter coupon code"
+                            class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                        <button id="apply-coupon"
+                            class="ml-2 px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300">Apply</button>
+                    </div>
+                    <div class="text-right">
+                        <div class="text-lg">
+                            <span class="font-medium">Subtotal:</span>
+                            <span class="ml-2">₹{{ cart.subtotal }}</span>
+                        </div>
+                        <div class="text-lg">
+                            <span class="font-medium">Total:</span>
+                            <span class="ml-2 font-bold">₹{{ cart.total }}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-8 flex flex-col sm:flex-row justify-between space-y-4 sm:space-y-0 sm:space-x-4">
+                    <a href="{% url 'products:list' %}"
+                        class="px-6 py-3 border border-gray-300 text-center text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+                        Continue Shopping
+                    </a>
+                    <a href="{% url 'cart:checkout' %}"
+                        class="px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-purple-600 hover:bg-purple-700">
+                        Proceed to Checkout
+                    </a>
+                </div>
+                {% else %}
+                <div class="text-center py-12">
+                    <div class="flex justify-center">
+                        <i class="fas fa-shopping-cart text-5xl text-gray-300"></i>
+                    </div>
+                    <h3 class="mt-4 text-lg font-medium text-gray-900">Your cart is empty</h3>
+                    <p class="mt-1 text-sm text-gray-500">Looks like you haven't added anything to your cart yet.</p>
+                    <div class="mt-6">
+                        <a href="{% url 'products:list' %}"
+                            class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-purple-600 hover:bg-purple-700">
+                            Browse Products
+                        </a>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Update quantity buttons
+        document.querySelectorAll('.quantity-btn').forEach(button => {
+            button.addEventListener('click', function () {
+                const input = this.parentElement.querySelector('.quantity-input');
+                let value = parseInt(input.value);
+
+                if (this.dataset.action === 'increment') {
+                    value++;
+                } else if (this.dataset.action === 'decrement' && value > 1) {
+                    value--;
+                }
+
+                input.value = value;
+
+                // Send AJAX request to update cart
+                fetch('{% url "cart:update_item" %}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                        'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                    },
+                    body: `item_id=${this.closest('tr').querySelector('.remove-item-btn').dataset.itemId}&quantity=${value}`
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            // Update totals
+                            // Find the row for this item and update the total
+                            const row = this.closest('tr');
+                            const itemTotalCell = row.querySelector('td:nth-child(4)');
+                            itemTotalCell.textContent = '₹' + data.item_total;
+
+                            // Update cart total
+                            const subtotalElement = document.querySelector('div.flex.flex-col.sm\\:flex-row.justify-between.items-start.sm\\:items-center.space-y-4.sm\\:space-y-0 div.text-right div:first-child span:last-child');
+                            if (subtotalElement) {
+                                subtotalElement.textContent = '₹' + data.cart_total;
+                            }
+
+                            // Update cart total in the second place
+                            const totalElement = document.querySelector('div.flex.flex-col.sm\\:flex-row.justify-between.items-start.sm\\:items-center.space-y-4.sm\\:space-y-0 div.text-right div:last-child span:last-child');
+                            if (totalElement) {
+                                totalElement.textContent = '₹' + data.cart_total;
+                            }
+                        }
+                    });
+            });
+        });
+
+        // Remove item buttons
+        document.querySelectorAll('.remove-item-btn').forEach(button => {
+            button.addEventListener('click', function (e) {
+                e.preventDefault();
+                // Prevent duplicate clicks
+                if (this.disabled) return;
+                this.disabled = true;
+                this.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+
+                const itemId = this.dataset.itemId;
+                const row = this.closest('tr');
+
+                fetch('{% url "cart:remove" %}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                        'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                    },
+                    body: `item_id=${itemId}`
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            // Update DOM instantly
+                            row.remove();
+
+                            // Update totals
+                            const subtotalElement = document.querySelector('div.flex.flex-col.sm\\:flex-row.justify-between.items-start.sm\\:items-center.space-y-4.sm\\:space-y-0 div.text-right div:first-child span:last-child');
+                            if (subtotalElement) subtotalElement.textContent = '₹' + data.cart_total;
+
+                            const totalElement = document.querySelector('div.flex.flex-col.sm\\:flex-row.justify-between.items-start.sm\\:items-center.space-y-4.sm\\:space-y-0 div.text-right div:last-child span:last-child');
+                            if (totalElement) totalElement.textContent = '₹' + data.cart_total;
+
+                            // Update header cart count
+                            const cartCountElement = document.getElementById('cart-count');
+                            if (cartCountElement) cartCountElement.textContent = data.cart_items;
+
+                            // Show custom Toast notification for UX
+                            const toastHtml = `
+                        <div id="toast-container">
+                            <div x-data="{ show: true }" x-show="show" x-init="setTimeout(() => show = false, 5000)" class="fixed bottom-4 right-4 bg-gray-900 text-white px-6 py-4 rounded-2xl shadow-2xl flex items-center justify-between gap-6 animate-slide-in-right z-50 min-w-[320px] border border-gray-800">
+                                <div class="flex items-center gap-3">
+                                    <div class="bg-gray-800 p-2 rounded-full">
+                                        <i class="fas fa-info-circle text-purple-400 text-sm"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm font-bold text-white">Item Removed</p>
+                                        <p class="text-xs text-gray-400">Successfully removed from your cart.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>`;
+                            const div = document.createElement('div');
+                            div.innerHTML = toastHtml;
+                            const existingToast = document.getElementById('toast-container');
+                            if (existingToast) existingToast.replaceWith(div.firstElementChild);
+                            else document.body.appendChild(div.firstElementChild);
+
+                            // Reload page if cart empty
+                            if (data.cart_items === 0) {
+                                setTimeout(() => window.location.reload(), 1500);
+                            }
+                        } else {
+                            this.disabled = false;
+                            this.innerHTML = 'Remove';
+                        }
+                    })
+                    .catch(() => {
+                        this.disabled = false;
+                        this.innerHTML = 'Remove';
+                    });
+            });
+        });
+
+        // Apply coupon
+        document.getElementById('apply-coupon').addEventListener('click', function () {
+            const couponCode = document.getElementById('coupon-code').value;
+
+            if (!couponCode) {
+                alert('Please enter a coupon code');
+                return;
+            }
+
+            fetch('{% url "cart:apply_coupon" %}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                },
+                body: `coupon_code=${encodeURIComponent(couponCode)}`
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert(data.message);
+                        // Reload page to update cart
+                        window.location.reload();
+                    } else {
+                        alert(data.message);
+                    }
+                });
+        });
+    });
+</script>
+{% endblock %}

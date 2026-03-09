@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+
+{% block title %}Add Address - Nikki Flower & Cake{% endblock %}
+
+{% block content %}
+<div class="min-h-screen bg-gray-50 py-12">
+    <div class="max-w-md mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="bg-white shadow rounded-lg p-6">
+            <h2 class="text-2xl font-playfair font-bold text-gray-900 mb-6 border-b pb-2">Add New Address</h2>
+
+            <form method="post" class="space-y-4">
+                {% csrf_token %}
+
+                {% if form.errors %}
+                <div class="bg-red-50 text-red-500 p-3 rounded mb-4 text-sm">
+                    Please correct the errors below.
+                </div>
+                {% endif %}
+
+                <div>
+                    <label for="{{ form.full_name.id_for_label }}"
+                        class="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+                    {{ form.full_name }}
+                    <p class="text-red-500 text-xs mt-1">{{ form.full_name.errors.as_text }}</p>
+                </div>
+
+                <div>
+                    <label for="{{ form.phone_number.id_for_label }}"
+                        class="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
+                    {{ form.phone_number }}
+                    <p class="text-red-500 text-xs mt-1">{{ form.phone_number.errors.as_text }}</p>
+                </div>
+
+                <div>
+                    <label for="{{ form.street_address.id_for_label }}"
+                        class="block text-sm font-medium text-gray-700 mb-1">Street Address</label>
+                    {{ form.street_address }}
+                    <p class="text-red-500 text-xs mt-1">{{ form.street_address.errors.as_text }}</p>
+                </div>
+
+                <div>
+                    <label for="{{ form.landmark.id_for_label }}"
+                        class="block text-sm font-medium text-gray-700 mb-1">Landmark (Optional)</label>
+                    {{ form.landmark }}
+                    <p class="text-red-500 text-xs mt-1">{{ form.landmark.errors.as_text }}</p>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label for="{{ form.city.id_for_label }}"
+                            class="block text-sm font-medium text-gray-700 mb-1">City</label>
+                        {{ form.city }}
+                        <p class="text-red-500 text-xs mt-1">{{ form.city.errors.as_text }}</p>
+                    </div>
+                    <div>
+                        <label for="{{ form.postal_code.id_for_label }}"
+                            class="block text-sm font-medium text-gray-700 mb-1">Postal Code</label>
+                        {{ form.postal_code }}
+                        <p class="text-red-500 text-xs mt-1">{{ form.postal_code.errors.as_text }}</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label for="{{ form.state.id_for_label }}"
+                            class="block text-sm font-medium text-gray-700 mb-1">State</label>
+                        {{ form.state }}
+                        <p class="text-red-500 text-xs mt-1">{{ form.state.errors.as_text }}</p>
+                    </div>
+                    <div>
+                        <label for="{{ form.country.id_for_label }}"
+                            class="block text-sm font-medium text-gray-700 mb-1">Country</label>
+                        {{ form.country }}
+                        <p class="text-red-500 text-xs mt-1">{{ form.country.errors.as_text }}</p>
+                    </div>
+                </div>
+
+                <div class="pt-4 flex items-center justify-between">
+                    <a href="{% if request.GET.next %}{{ request.GET.next }}{% else %}{% url 'users:profile' %}{% endif %}"
+                        class="text-sm text-gray-600 hover:text-purple-600">Cancel</a>
+                    <button type="submit"
+                        class="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-6 rounded-lg transition-colors">Save
+                        Address</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

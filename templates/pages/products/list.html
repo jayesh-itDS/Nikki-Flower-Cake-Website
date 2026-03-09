@@ -1,0 +1,239 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Shop All - Nikki Flower & Cake{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<div class="bg-purple-50 py-12 lg:py-16 relative overflow-hidden">
+    <!-- Decorative background elements -->
+    <div
+        class="absolute top-0 right-0 w-64 h-64 bg-purple-200 rounded-full mix-blend-multiply filter blur-3xl opacity-50 animate-pulse-glow">
+    </div>
+    <div class="absolute bottom-0 left-0 w-64 h-64 bg-pink-200 rounded-full mix-blend-multiply filter blur-3xl opacity-50 animate-pulse-glow"
+        style="animation-delay: 2s;"></div>
+
+    <div class="container mx-auto px-4 relative z-10 text-center animate-fade-in-up">
+        <!-- Breadcrumbs -->
+        <nav class="flex justify-center text-sm font-medium text-gray-500 mb-4" aria-label="Breadcrumb">
+            <ol class="inline-flex items-center space-x-1 md:space-x-3">
+                <li class="inline-flex items-center">
+                    <a href="{% url 'products:home' %}"
+                        class="inline-flex items-center hover:text-purple-600 transition-colors">
+                        <i class="fas fa-home mr-2 flex-shrink-0"></i>
+                        Home
+                    </a>
+                </li>
+                <li>
+                    <div class="flex items-center">
+                        <i class="fas fa-chevron-right text-gray-400 mx-2 text-xs"></i>
+                        <span class="text-gray-900" aria-current="page">
+                            {% if current_category %}
+                            {{ current_category|title }}
+                            {% elif current_occasion %}
+                            {{ current_occasion|title }}
+                            {% elif search_query %}
+                            Search Results
+                            {% else %}
+                            All Products
+                            {% endif %}
+                        </span>
+                    </div>
+                </li>
+            </ol>
+        </nav>
+
+        <h1 class="text-4xl md:text-5xl font-playfair font-bold text-gray-900 mb-4">
+            {% if search_query %}
+            Search Results for "{{ search_query }}"
+            {% elif current_category %}
+            Shop {{ current_category|title }}
+            {% elif current_occasion %}
+            {{ current_occasion|title }} Gifts
+            {% else %}
+            Our Complete Collection
+            {% endif %}
+        </h1>
+        <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+            Discover our handpicked selection of premium flowers, artisan cakes, and delightful gifts designed to make
+            every moment truly special.
+        </p>
+    </div>
+</div>
+
+<div class="bg-gray-50 py-12 w-full">
+    <div class="container mx-auto px-4 lg:px-8 max-w-[1600px]">
+        <div class="flex flex-col lg:flex-row gap-8 items-start">
+
+            <!-- Filters Sidebar (Desktop) -->
+            <aside
+                class="hidden lg:block w-72 flex-shrink-0 sticky top-28 bg-white border border-gray-100 rounded-2xl shadow-sm p-6 overflow-y-auto max-h-[calc(100vh-120px)] animate-slide-in-right custom-scrollbar">
+                <div class="flex items-center justify-between mb-6 pb-4 border-b border-gray-100">
+                    <h2 class="text-xl font-bold flex items-center gap-2">
+                        <i class="fas fa-filter text-purple-600"></i> Filters
+                    </h2>
+                    <a href="{% url 'products:list' %}"
+                        class="text-sm text-gray-500 hover:text-purple-600 underline">Clear All</a>
+                </div>
+
+                <form id="filter-form" action="{% url 'products:list' %}" method="GET" class="space-y-8">
+                    <!-- Preserve search query if present -->
+                    {% if search_query %}
+                    <input type="hidden" name="q" value="{{ search_query }}">
+                    {% endif %}
+
+                    <!-- Categories Filter -->
+                    <div>
+                        <h3 class="font-bold text-gray-900 mb-4">Categories</h3>
+                        <div class="space-y-3">
+                            <label class="flex items-center group cursor-pointer">
+                                <input type="radio" name="category" value="" onchange="this.form.submit()"
+                                    class="form-radio h-4 w-4 text-purple-600 border-gray-300 focus:ring-purple-500 cursor-pointer"
+                                    {% if not current_category %}checked{% endif %}>
+                                <span
+                                    class="ml-3 text-sm text-gray-600 group-hover:text-purple-600 transition-colors font-medium">All
+                                    Categories</span>
+                            </label>
+                            {% for c in categories %}
+                            <label class="flex items-center group cursor-pointer">
+                                <input type="radio" name="category" value="{{ c.slug }}" onchange="this.form.submit()"
+                                    class="form-radio h-4 w-4 text-purple-600 border-gray-300 focus:ring-purple-500 cursor-pointer"
+                                    {% if current_category == c.slug %}checked{% endif %}>
+                                <span
+                                    class="ml-3 text-sm text-gray-600 group-hover:text-purple-600 transition-colors">{{ c.name }}</span>
+                            </label>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <div class="h-px bg-gray-100 w-full"></div>
+
+                    <!-- Occasions Filter -->
+                    <div>
+                        <h3 class="font-bold text-gray-900 mb-4">Occasions</h3>
+                        <div class="space-y-3 max-h-48 overflow-y-auto pr-2 custom-scrollbar">
+                            <label class="flex items-center group cursor-pointer">
+                                <input type="radio" name="occasion" value="" onchange="this.form.submit()"
+                                    class="form-radio h-4 w-4 text-purple-600 border-gray-300 focus:ring-purple-500 cursor-pointer"
+                                    {% if not current_occasion %}checked{% endif %}>
+                                <span
+                                    class="ml-3 text-sm text-gray-600 group-hover:text-purple-600 transition-colors font-medium">All
+                                    Occasions</span>
+                            </label>
+                            {% for o in occasions %}
+                            <label class="flex items-center group cursor-pointer">
+                                <input type="radio" name="occasion" value="{{ o.slug }}" onchange="this.form.submit()"
+                                    class="form-radio h-4 w-4 text-purple-600 border-gray-300 focus:ring-purple-500 cursor-pointer"
+                                    {% if current_occasion == o.slug %}checked{% endif %}>
+                                <span
+                                    class="ml-3 text-sm text-gray-600 group-hover:text-purple-600 transition-colors">{{ o.name }}</span>
+                            </label>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <div class="h-px bg-gray-100 w-full"></div>
+
+                    <!-- Sort -->
+                    <div>
+                        <h3 class="font-bold text-gray-900 mb-4 flex items-center justify-between">Sort By
+                            <i class="fas fa-sort-amount-down-alt text-gray-400 text-sm"></i>
+                        </h3>
+                        <select name="sort" onchange="this.form.submit()"
+                            class="w-full bg-gray-50 border border-gray-200 text-gray-700 text-sm rounded-xl focus:ring-purple-500 focus:border-purple-500 block p-3 outline-none cursor-pointer hover:border-gray-300 transition-colors">
+                            <option value="created_at" {% if current_sort == 'created_at' %}selected{% endif %}>Newest
+                                Arrivals</option>
+                            <option value="price_low" {% if current_sort == 'price_low' %}selected{% endif %}>Price: Low
+                                to High</option>
+                            <option value="price_high" {% if current_sort == 'price_high' %}selected{% endif %}>Price:
+                                High to Low</option>
+                            <option value="rating" {% if current_sort == 'rating' %}selected{% endif %}>Highest Rated
+                            </option>
+                        </select>
+                    </div>
+                </form>
+            </aside>
+
+            <!-- Main Product Grid Area -->
+            <div class="flex-1 w-full">
+                <!-- Mobile Filter Indicators (shows only if filters active) -->
+                {% if current_category or current_occasion or current_sort != 'created_at' or search_query %}
+                <div class="lg:hidden flex flex-wrap gap-2 mb-6 animate-fade-in-up">
+                    <span class="text-xs text-gray-500 flex items-center mr-2">Filters tracking:</span>
+
+                    {% if current_category %}
+                    <span
+                        class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-purple-100 text-purple-800">
+                        Category
+                        <button type="button"
+                            class="ml-1.5 flex-shrink-0 h-4 w-4 rounded-full inline-flex items-center justify-center text-purple-600 hover:bg-purple-200 hover:text-purple-900 focus:outline-none focus:bg-purple-500 focus:text-white transition-colors"
+                            onclick="window.location.href='?{% if search_query %}q={{search_query}}&{% endif %}{% if current_occasion %}occasion={{current_occasion}}&{% endif %}sort={{current_sort}}'">
+                            <span class="sr-only">Remove category filter</span>
+                            <svg class="h-2 w-2" stroke="currentColor" fill="none" viewBox="0 0 8 8">
+                                <path stroke-linecap="round" stroke-width="1.5" d="M1 1l6 6m0-6L1 7" />
+                            </svg>
+                        </button>
+                    </span>
+                    {% endif %}
+
+                    <!-- Simulating the sort tracking -->
+                    {% if current_sort != 'created_at' %}
+                    <span
+                        class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
+                        Sorted
+                    </span>
+                    {% endif %}
+
+                    <a href="{% url 'products:list' %}"
+                        class="inline-flex items-center text-xs text-purple-600 hover:underline">Clear all</a>
+                </div>
+                {% endif %}
+
+                <!-- Mobile Filter & Sort Bar (Sticky) -->
+                <div
+                    class="lg:hidden sticky top-16 z-30 bg-white/90 backdrop-blur-md border-y border-gray-200 py-3 mb-6 grid grid-cols-2 divide-x divide-gray-200 animate-fade-in-up">
+                    <button
+                        class="text-gray-700 font-medium text-sm flex justify-center items-center gap-2 hover:text-purple-600 transition-colors"
+                        onclick="alert('Mobile dialog opening...')">
+                        <i class="fas fa-sort-amount-down-alt"></i> Sort
+                    </button>
+                    <button
+                        class="text-gray-700 font-medium text-sm flex justify-center items-center gap-2 hover:text-purple-600 transition-colors"
+                        onclick="alert('Mobile dialog opening...')">
+                        <i class="fas fa-filter"></i> Filters
+                    </button>
+                </div>
+
+                <!-- Products Display -->
+                <div id="product-grid"
+                    class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-6 animate-fade-in-up"
+                    style="animation-delay: 0.2s;">
+                    {% include "components/product_grid.html" %}
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Custom Scrollbar for Filters Menu */
+    .custom-scrollbar::-webkit-scrollbar {
+        width: 4px;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        border-radius: 4px;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+        background: #d8b4fe;
+        border-radius: 4px;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+        background: #9333ea;
+    }
+</style>
+{% endblock %}

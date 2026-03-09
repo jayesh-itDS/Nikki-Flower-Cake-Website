@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block title %}Shop Flowers &amp; Cakes | Nikki Flower &amp; Cake{% endblock %}
+
+{% block content %}
+  <section class="mb-8 space-y-4">
+    <div class="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+      <div>
+        <h1 class="text-2xl font-semibold tracking-tight text-slate-900 sm:text-3xl">
+          Make every moment unforgettable
+        </h1>
+        <p class="mt-1 text-sm text-slate-500">
+          Handcrafted bouquets, designer cakes, and thoughtful combos – delivered with care.
+        </p>
+      </div>
+
+      <form
+        id="product-filters"
+        class="filters flex flex-wrap items-center gap-2 text-sm"
+        hx-get="{% url 'products:list' %}"
+        hx-target="#product-grid"
+        hx-include="#product-filters"
+        hx-push-url="true"
+      >
+        <select name="category" class="rounded-full border border-slate-200 bg-white px-3 py-1.5 text-xs">
+          <option value="">All categories</option>
+          {% for cat in categories %}
+            <option value="{{ cat.slug }}">{{ cat.name }}</option>
+          {% endfor %}
+        </select>
+
+        <select name="occasion" class="rounded-full border border-slate-200 bg-white px-3 py-1.5 text-xs">
+          <option value="">Any occasion</option>
+          {% for occ in occasions %}
+            <option value="{{ occ.slug }}">{{ occ.name }}</option>
+          {% endfor %}
+        </select>
+
+        <select name="sort" class="rounded-full border border-slate-200 bg-white px-3 py-1.5 text-xs">
+          <option value="">Sort by</option>
+          <option value="price_asc">Price: Low to High</option>
+          <option value="price_desc">Price: High to Low</option>
+        </select>
+      </form>
+    </div>
+  </section>
+
+  <section>
+    <div
+      id="product-grid"
+      class="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4"
+    >
+      {% include "products/partials/product_grid.html" %}
+    </div>
+  </section>
+{% endblock %}
+

@@ -1,0 +1,129 @@
+{% for product in products %}
+<div data-aos="fade-up" data-aos-delay="{{ forloop.counter0|add:1|slugify|add:'00' }}"
+    class="bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 overflow-hidden group border border-gray-100 relative">
+
+    <!-- Badges -->
+    {% if product.is_trending %}
+    <div
+        class="absolute top-4 left-4 z-10 bg-gradient-to-r from-amber-400 to-orange-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg flex items-center gap-1">
+        <i class="fas fa-fire text-[10px] animate-pulse"></i> Trending
+    </div>
+    {% endif %}
+
+    <!-- Image Container with Aspect Ratio -->
+    <a href="{% url 'products:detail' product.slug %}" class="block relative pt-[100%] overflow-hidden bg-gray-50">
+        {% if product.primary_image %}
+        <img src="{{ product.primary_image.url }}" alt="{{ product.name }}"
+            class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+        {% else %}
+        <!-- Fallback Image -->
+        <div class="absolute inset-0 flex items-center justify-center bg-purple-50 text-purple-300">
+            <i class="fas fa-image text-4xl"></i>
+        </div>
+        {% endif %}
+
+        <!-- Quick Actions Overlay -->
+        <div
+            class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-4">
+            <button
+                class="bg-white text-purple-600 w-10 h-10 rounded-full flex items-center justify-center hover:bg-purple-600 hover:text-white transition-colors transform translate-y-4 group-hover:translate-y-0 duration-300 shadow-lg"
+                title="Quick View">
+                <i class="fas fa-eye"></i>
+            </button>
+            <button
+                class="bg-white text-pink-500 w-10 h-10 rounded-full flex items-center justify-center hover:bg-pink-500 hover:text-white transition-colors transform translate-y-4 group-hover:translate-y-0 duration-300 delay-75 shadow-lg"
+                title="Add to Wishlist">
+                <i class="fas fa-heart"></i>
+            </button>
+        </div>
+    </a>
+
+    <!-- Product Details -->
+    <div class="p-5">
+        <div class="flex items-start justify-between mb-2">
+            <div>
+                <a href="{% url 'products:detail' product.slug %}">
+                    <h3 class="text-lg font-bold text-gray-900 group-hover:text-purple-600 transition-colors line-clamp-1"
+                        title="{{ product.name }}">{{ product.name }}</h3>
+                </a>
+                <p class="text-sm text-gray-500 mb-1">{{ product.category.name }}</p>
+            </div>
+
+            <!-- Rating -->
+            <div class="flex items-center text-amber-400 text-xs mt-1 bg-amber-50 px-2 py-1 rounded-md">
+                <i class="fas fa-star mr-1"></i>
+                <span class="text-gray-700 font-medium">4.8</span>
+            </div>
+        </div>
+
+        <div class="flex items-center justify-between mt-4">
+            <div class="flex flex-col">
+                <span class="text-xs text-gray-500 line-through">₹{{ product.base_price|add:"300" }}</span>
+                <span class="text-xl font-bold text-gray-900">₹{{ product.base_price }}</span>
+            </div>
+
+            <button hx-post="{% url 'cart:add' %}" hx-swap="none"
+                hx-vals='{"product_id": "{{ product.id }}", "quantity": 1}'
+                hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
+                class="bg-purple-100 text-purple-700 hover:bg-purple-600 hover:text-white px-4 py-2 rounded-xl text-sm font-semibold transition-colors duration-300 flex items-center gap-2">
+                <i class="fas fa-shopping-bag text-xs"></i> Add
+            </button>
+        </div>
+    </div>
+</div>
+{% empty %}
+<div class="col-span-full py-16 text-center animate-fade-in-up">
+    <div
+        class="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4 text-gray-400 text-3xl">
+        <i class="fas fa-search"></i>
+    </div>
+    <h3 class="text-2xl font-bold text-gray-900 mb-2">No products found</h3>
+    <p class="text-gray-500 max-w-md mx-auto">We couldn't find any products matching your current filters. Try removing
+        some filters or searching for something else.</p>
+    <a href="{% url 'products:list' %}"
+        class="inline-block mt-6 px-6 py-3 bg-purple-600 text-white font-medium rounded-xl hover:bg-purple-700 transition-colors shadow-lg shadow-purple-200">
+        Clear All Filters
+    </a>
+</div>
+{% endfor %}
+
+<!-- Pagination (HTMX driven) -->
+{% if products.has_other_pages %}
+<div class="col-span-full mt-12 mb-4 flex justify-center">
+    <nav class="flex items-center gap-2" aria-label="Pagination">
+        {% if products.has_previous %}
+        <a href="?page={{ products.previous_page_number }}{% if current_category %}&category={{ current_category }}{% endif %}{% if search_query %}&q={{ search_query }}{% endif %}"
+            hx-get="?page={{ products.previous_page_number }}{% if current_category %}&category={{ current_category }}{% endif %}{% if search_query %}&q={{ search_query }}{% endif %}"
+            hx-target="#product-grid" hx-push-url="true"
+            class="w-10 h-10 flex items-center justify-center rounded-lg border border-gray-200 text-gray-600 hover:bg-purple-50 hover:text-purple-600 hover:border-purple-200 transition-colors">
+            <i class="fas fa-chevron-left text-xs"></i>
+        </a>
+        {% endif %}
+
+        {% for i in products.paginator.page_range %}
+        {% if products.number == i %}
+        <span
+            class="w-10 h-10 flex items-center justify-center rounded-lg bg-purple-600 text-white font-medium shadow-md">
+            {{ i }}
+        </span>
+        {% elif i > products.number|add:"-3" and i < products.number|add:"3" %} <a
+            href="?page={{ i }}{% if current_category %}&category={{ current_category }}{% endif %}{% if search_query %}&q={{ search_query }}{% endif %}"
+            hx-get="?page={{ i }}{% if current_category %}&category={{ current_category }}{% endif %}{% if search_query %}&q={{ search_query }}{% endif %}"
+            hx-target="#product-grid" hx-push-url="true"
+            class="w-10 h-10 flex items-center justify-center rounded-lg border border-gray-200 text-gray-600 hover:bg-purple-50 hover:text-purple-600 hover:border-purple-200 transition-colors">
+            {{ i }}
+            </a>
+            {% endif %}
+            {% endfor %}
+
+            {% if products.has_next %}
+            <a href="?page={{ products.next_page_number }}{% if current_category %}&category={{ current_category }}{% endif %}{% if search_query %}&q={{ search_query }}{% endif %}"
+                hx-get="?page={{ products.next_page_number }}{% if current_category %}&category={{ current_category }}{% endif %}{% if search_query %}&q={{ search_query }}{% endif %}"
+                hx-target="#product-grid" hx-push-url="true"
+                class="w-10 h-10 flex items-center justify-center rounded-lg border border-gray-200 text-gray-600 hover:bg-purple-50 hover:text-purple-600 hover:border-purple-200 transition-colors">
+                <i class="fas fa-chevron-right text-xs"></i>
+            </a>
+            {% endif %}
+    </nav>
+</div>
+{% endif %}

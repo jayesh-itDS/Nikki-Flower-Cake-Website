@@ -1,0 +1,190 @@
+{% extends 'base.html' %}
+
+{% block title %}Checkout - Nikki Flower & Cake{% endblock %}
+
+{% block content %}
+<div class="min-h-screen bg-gray-50 py-12">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8" data-aos="fade-up">
+        <div class="bg-white shadow-xl rounded-2xl overflow-hidden border border-gray-100">
+            <div class="px-6 py-6 sm:px-8 border-b border-gray-100 bg-gray-50/50">
+                <h3 class="text-2xl font-playfair font-bold text-gray-900 flex items-center gap-2">
+                    <i class="fas fa-lock text-purple-600 text-xl"></i> Secure Checkout
+                </h3>
+                <p class="mt-1 text-sm text-gray-500">Complete your purchase quickly and securely.</p>
+            </div>
+            <div class="px-6 py-8 sm:p-8">
+                <!-- Removed data-removed-alpine to prevent AlpineJS from intercepting Django tags -->
+                <form method="post" action="{% url 'cart:process' %}">
+                    {% csrf_token %}
+
+                    <div class="grid grid-cols-1 gap-y-10 md:grid-cols-12 md:gap-x-12">
+                        <!-- Left Column: Cart Items and Summary -->
+                        <div class="md:col-span-5 min-w-0 flex flex-col space-y-6 order-2 md:order-1"
+                            data-aos="fade-right" data-aos-delay="100">
+                            <div
+                                class="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow">
+                                <h4 class="text-lg font-bold text-gray-900 mb-4 border-b pb-2">Order Summary</h4>
+                                <div class="space-y-4 mb-6">
+                                    {% for item in cart.items.all %}
+                                    <div class="flex justify-between items-start">
+                                        <div class="flex flex-col">
+                                            <span class="text-sm font-semibold text-gray-800">
+                                                {{ item.product.name }}
+                                            </span>
+                                            <span class="text-xs text-gray-500 mt-1">
+                                                Qty: {{ item.quantity }}
+                                            </span>
+                                        </div>
+                                        <span class="text-sm font-bold text-gray-900">₹{{ item.total_price }}</span>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+
+                                <div class="border-t pt-4 space-y-2">
+                                    <div class="flex justify-between text-sm text-gray-600">
+                                        <span>Subtotal</span>
+                                        <span>₹{{ cart.subtotal }}</span>
+                                    </div>
+                                    <div class="flex justify-between text-sm text-gray-600">
+                                        <span>Shipping</span>
+                                        <span class="text-green-600 font-medium">Free</span>
+                                    </div>
+                                    <div
+                                        class="flex justify-between text-lg font-bold text-gray-900 pt-2 border-t mt-2">
+                                        <span>Total</span>
+                                        <span>₹{{ cart.total }}</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="bg-white border rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow">
+                                <label for="gift_message" class="block text-sm font-bold text-gray-800 mb-2">Gift
+                                    Message (Optional)</label>
+                                <textarea id="gift_message" name="gift_message" rows="3"
+                                    class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent transition-all"
+                                    placeholder="Write a note to go with your gift..."></textarea>
+                            </div>
+
+                            <div class="bg-white border rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow">
+                                <label for="special_instructions"
+                                    class="block text-sm font-bold text-gray-800 mb-2">Special Instructions
+                                    (Optional)</label>
+                                <textarea id="special_instructions" name="special_instructions" rows="2"
+                                    class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent transition-all"
+                                    placeholder="Any special delivery instructions?"></textarea>
+                            </div>
+                        </div>
+
+                        <!-- Right Column: Delivery and Payment -->
+                        <div class="md:col-span-7 min-w-0 order-1 md:order-2" data-aos="fade-left" data-aos-delay="200">
+                            <h4 class="text-xl font-bold font-playfair text-gray-900 mb-6 flex items-center gap-2">
+                                <i class="fas fa-truck text-purple-600"></i> Delivery Information
+                            </h4>
+
+                            <div class="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm mb-6">
+                                <div class="mb-6">
+                                    <label class="block text-sm font-semibold text-gray-800 mb-2">Delivery
+                                        Address</label>
+                                    <select name="address_id" required
+                                        class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent transition-all cursor-pointer">
+                                        {% for addr in addresses %}
+                                        <option value="{{ addr.id }}">
+                                            {{ addr.full_name }}
+                                            {% if addr.street_address %} - {{ addr.street_address }}{% endif %}
+                                            {% if addr.city %}, {{ addr.city }}{% endif %}
+                                        </option>
+                                        {% empty %}
+                                        <option disabled>No saved addresses. Please add an address first.</option>
+                                        {% endfor %}
+                                    </select>
+                                    <a href="{% url 'users:add_address' %}?next={% url 'cart:checkout' %}"
+                                        class="mt-3 text-sm font-medium text-purple-600 hover:text-purple-700 inline-block transition-colors">
+                                        <i class="fas fa-plus-circle mr-1"></i> Add new address
+                                    </a>
+                                </div>
+
+                                <div class="grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-6">
+                                    <div>
+                                        <label for="delivery_date"
+                                            class="block text-sm font-semibold text-gray-800 mb-2">Delivery Date</label>
+                                        <input type="date" id="delivery_date" name="delivery_date" required
+                                            min="{% now 'Y-m-d' %}"
+                                            class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent transition-all cursor-pointer">
+                                    </div>
+
+                                    <div>
+                                        <label for="delivery_slot"
+                                            class="block text-sm font-semibold text-gray-800 mb-2">Delivery Slot</label>
+                                        <select id="delivery_slot" name="delivery_slot" required
+                                            class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent transition-all cursor-pointer">
+                                            {% for ds in delivery_slots %}
+                                            <option
+                                                value="{{ ds.start_time|time:'H:i' }} - {{ ds.end_time|time:'H:i' }}">
+                                                {{ ds.start_time|time:'H:i' }} - {{ ds.end_time|time:'H:i' }}
+                                            </option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
+                                <h4 class="text-xl font-bold font-playfair text-gray-900 mb-4 flex items-center gap-2">
+                                    <i class="fas fa-credit-card text-purple-600"></i> Payment Method
+                                </h4>
+
+                                <div class="space-y-4">
+                                    <div
+                                        class="flex items-center p-3 border border-gray-100 rounded-xl hover:bg-gray-50 transition-colors cursor-pointer group">
+                                        <input id="card" name="payment_method" type="radio" value="card"
+                                            class="focus:ring-purple-600 h-5 w-5 text-purple-600 border-gray-300 cursor-pointer"
+                                            checked>
+                                        <label for="card"
+                                            class="ml-3 block text-sm font-medium text-gray-800 cursor-pointer w-full group-hover:text-purple-700 transition-colors">
+                                            Credit/Debit Card
+                                        </label>
+                                        <i
+                                            class="fas fa-credit-card text-gray-400 group-hover:text-purple-500 ml-auto transition-colors"></i>
+                                    </div>
+
+                                    <div
+                                        class="flex items-center p-3 border border-gray-100 rounded-xl hover:bg-gray-50 transition-colors cursor-pointer group">
+                                        <input id="upi" name="payment_method" type="radio" value="upi"
+                                            class="focus:ring-purple-600 h-5 w-5 text-purple-600 border-gray-300 cursor-pointer">
+                                        <label for="upi"
+                                            class="ml-3 block text-sm font-medium text-gray-800 cursor-pointer w-full group-hover:text-purple-700 transition-colors">
+                                            UPI (Google Pay, PhonePe, Paytm)
+                                        </label>
+                                        <i
+                                            class="fas fa-qrcode text-gray-400 group-hover:text-purple-500 ml-auto transition-colors"></i>
+                                    </div>
+
+                                    <div
+                                        class="flex items-center p-3 border border-gray-100 rounded-xl hover:bg-gray-50 transition-colors cursor-pointer group">
+                                        <input id="cod" name="payment_method" type="radio" value="cod"
+                                            class="focus:ring-purple-600 h-5 w-5 text-purple-600 border-gray-300 cursor-pointer">
+                                        <label for="cod"
+                                            class="ml-3 block text-sm font-medium text-gray-800 cursor-pointer w-full group-hover:text-purple-700 transition-colors">
+                                            Cash on Delivery
+                                        </label>
+                                        <i
+                                            class="fas fa-money-bill-wave text-gray-400 group-hover:text-purple-500 ml-auto transition-colors"></i>
+                                    </div>
+                                </div>
+
+                                <div class="mt-8">
+                                    <button type="submit"
+                                        class="w-full flex justify-center py-4 px-4 border border-transparent rounded-xl shadow-lg shadow-purple-200 text-base font-bold text-white bg-purple-600 hover:bg-purple-700 hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-600 transition-all duration-300 group">
+                                        Place Order Securely <i
+                                            class="fas fa-lock ml-2 mt-1 group-hover:animate-bounce"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

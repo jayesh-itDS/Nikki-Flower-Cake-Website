@@ -1,0 +1,1514 @@
+<!DOCTYPE html>
+
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - Nikki Flower & Cake</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/static/images/favicon.ico">
+
+    <!-- Tailwind CSS Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'sans': ['Inter', 'sans-serif'],
+                        'playfair': ['Playfair Display', 'serif']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Alpine.js -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+    <!-- HTMX -->
+    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="/static/css/style.css">
+
+    <!-- Font Awesome for icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
+    <!-- AOS Animation CSS -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <!-- Custom Animations -->
+    <style>
+        /* Custom keyframe animations */
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0px) rotate(-6deg);
+            }
+
+            50% {
+                transform: translateY(-10px) rotate(-6deg);
+            }
+        }
+
+        @keyframes bounce-slow {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-15px);
+            }
+        }
+
+        @keyframes fade-in-up {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse-glow {
+
+            0%,
+            100% {
+                box-shadow: 0 0 15px rgba(147, 51, 234, 0.4);
+            }
+
+            50% {
+                box-shadow: 0 0 30px rgba(147, 51, 234, 0.8);
+            }
+        }
+
+        @keyframes shimmer {
+            0% {
+                background-position: -1000px 0;
+            }
+
+            100% {
+                background-position: 1000px 0;
+            }
+        }
+
+        @keyframes slide-in-right {
+            0% {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+
+            100% {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes scale-up {
+            0% {
+                transform: scale(0.8);
+                opacity: 0;
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        @keyframes trending-rotate {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes heartbeat {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.1);
+            }
+        }
+
+        @keyframes wiggle {
+
+            0%,
+            100% {
+                transform: rotate(0deg);
+            }
+
+            25% {
+                transform: rotate(-5deg);
+            }
+
+            75% {
+                transform: rotate(5deg);
+            }
+        }
+
+        @keyframes glow-rainbow {
+            0% {
+                box-shadow: 0 0 20px #ff0000, 0 0 30px #ff0000;
+            }
+
+            14% {
+                box-shadow: 0 0 20px #ff9900, 0 0 30px #ff9900;
+            }
+
+            28% {
+                box-shadow: 0 0 20px #ffff00, 0 0 30px #ffff00;
+            }
+
+            42% {
+                box-shadow: 0 0 20px #00ff00, 0 0 30px #00ff00;
+            }
+
+            57% {
+                box-shadow: 0 0 20px #00ffff, 0 0 30px #00ffff;
+            }
+
+            71% {
+                box-shadow: 0 0 20px #0000ff, 0 0 30px #0000ff;
+            }
+
+            85% {
+                box-shadow: 0 0 20px #ff00ff, 0 0 30px #ff00ff;
+            }
+
+            100% {
+                box-shadow: 0 0 20px #ff0000, 0 0 30px #ff0000;
+            }
+        }
+
+        @keyframes slide-down {
+            0% {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+
+            100% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes zoom-in-out {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.2);
+            }
+        }
+
+        @keyframes fire-flicker {
+
+            0%,
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+
+            50% {
+                opacity: 0.8;
+                transform: scale(1.3);
+            }
+        }
+
+        /* Animation classes */
+        .animate-float {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .animate-bounce-slow {
+            animation: bounce-slow 3s ease-in-out infinite;
+        }
+
+        .animate-fade-in-up {
+            animation: fade-in-up 0.6s ease-out;
+        }
+
+        .animate-pulse-glow {
+            animation: pulse-glow 2s ease-in-out infinite;
+        }
+
+        .animate-shimmer {
+            animation: shimmer 2s linear infinite;
+            background: linear-gradient(to right, transparent 0%, rgba(255, 255, 255, 0.2) 50%, transparent 100%);
+            background-size: 1000px 100%;
+        }
+
+        .animate-slide-in-right {
+            animation: slide-in-right 0.5s ease-out;
+        }
+
+        .animate-scale-up {
+            animation: scale-up 0.5s ease-out;
+        }
+
+        .animate-trending-rotate {
+            animation: trending-rotate 10s linear infinite;
+        }
+
+        .animate-heartbeat {
+            animation: heartbeat 1s ease-in-out infinite;
+        }
+
+        .animate-wiggle {
+            animation: wiggle 2s ease-in-out infinite;
+        }
+
+        .animate-glow-rainbow {
+            animation: glow-rainbow 3s linear infinite;
+        }
+
+        .animate-slide-down {
+            animation: slide-down 0.5s ease-out;
+        }
+
+        .animate-zoom-in-out {
+            animation: zoom-in-out 2s ease-in-out infinite;
+        }
+
+        .animate-fire-flicker {
+            animation: fire-flicker 1.5s ease-in-out infinite;
+        }
+
+        /* Smooth transitions */
+        .transition-all-300 {
+            transition: all 0.3s ease;
+        }
+
+        .transition-all-500 {
+            transition: all 0.5s ease;
+        }
+
+        /* Hover effects */
+        .hover-lift {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .hover-lift:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Gradient animation */
+        .gradient-animate {
+            background-size: 200% 200%;
+            animation: gradient-shift 5s ease infinite;
+        }
+
+        @keyframes gradient-shift {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        /* --- Global Live Background Animations --- */
+        @keyframes gradient-shift {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        @keyframes particle-drift {
+            0% {
+                transform: translate(0, 0) rotate(0deg);
+                opacity: 0;
+            }
+
+            30% {
+                opacity: 0.6;
+            }
+
+            70% {
+                opacity: 0.6;
+            }
+
+            100% {
+                transform: translate(100px, -200px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .live-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -10;
+            background: linear-gradient(-45deg, #f3e8ff, #fce7f3, #fdf4ff, #fffbeb);
+            background-size: 400% 400%;
+            animation: gradient-shift 15s ease infinite;
+        }
+
+        .particle {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: rgba(147, 51, 234, 0.1);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: particle-drift 8s infinite linear;
+        }
+
+        /* Particle Variations */
+        .p-1 {
+            left: 10%;
+            top: 80%;
+            width: 40px;
+            height: 40px;
+            animation-duration: 12s;
+            animation-delay: 0s;
+        }
+
+        .p-2 {
+            left: 30%;
+            top: 50%;
+            width: 25px;
+            height: 25px;
+            animation-duration: 8s;
+            animation-delay: 2s;
+            background: rgba(236, 72, 153, 0.1);
+        }
+
+        .p-3 {
+            left: 60%;
+            top: 90%;
+            width: 50px;
+            height: 50px;
+            animation-duration: 15s;
+            animation-delay: 4s;
+        }
+
+        .p-4 {
+            left: 80%;
+            top: 70%;
+            width: 30px;
+            height: 30px;
+            animation-duration: 10s;
+            animation-delay: 1s;
+            background: rgba(245, 158, 11, 0.1);
+        }
+
+        .p-5 {
+            left: 20%;
+            top: 30%;
+            width: 15px;
+            height: 15px;
+            animation-duration: 7s;
+            animation-delay: 5s;
+        }
+
+        .p-6 {
+            left: 70%;
+            top: 20%;
+            width: 35px;
+            height: 35px;
+            animation-duration: 14s;
+            animation-delay: 3s;
+            background: rgba(236, 72, 153, 0.1);
+        }
+    </style>
+
+
+    
+</head>
+
+<body class="font-sans bg-transparent text-gray-800 relative flex flex-col min-h-screen"
+    x-data="{ mobileMenuOpen: false, cartOpen: false }">
+    <!-- Global Live Background -->
+    <div class="live-bg">
+        <div class="particle p-1"></div>
+        <div class="particle p-2"></div>
+        <div class="particle p-3"></div>
+        <div class="particle p-4"></div>
+        <div class="particle p-5"></div>
+        <div class="particle p-6"></div>
+    </div>
+
+    <!-- Skip to content -->
+    <a href="#main-content"
+        class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:bg-white focus:text-black focus:p-4">
+        Skip to content
+    </a>
+
+    <!-- Header -->
+    <header class="sticky top-0 z-40 bg-white shadow-sm">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex items-center justify-between">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <a href="/" class="text-2xl font-playfair font-bold text-purple-600">
+                        Nikki<span class="text-amber-500">Flower</span>&Cake
+                    </a>
+                </div>
+
+                <!-- Desktop Navigation -->
+                <nav class="hidden md:flex space-x-8">
+                    <a href="/"
+                        class="text-gray-700 hover:text-purple-600 transition-colors">Home</a>
+                    <a href="/products/?category=flowers"
+                        class="text-gray-700 hover:text-purple-600 transition-colors">Flowers</a>
+                    <a href="/products/?category=cakes"
+                        class="text-gray-700 hover:text-purple-600 transition-colors">Cakes</a>
+                    <a href="/products/?category=occasions"
+                        class="text-gray-700 hover:text-purple-600 transition-colors">Occasions</a>
+                    <a href="/about/" class="text-gray-700 hover:text-purple-600 transition-colors">About</a>
+                    <a href="/contact/"
+                        class="text-gray-700 hover:text-purple-600 transition-colors">Contact</a>
+                </nav>
+
+                <!-- User Actions -->
+                <div class="flex items-center space-x-4">
+                    <!-- Search -->
+                    <div class="hidden md:block relative">
+                        <input type="text" placeholder="Search..."
+                            class="border border-gray-300 rounded-full py-2 px-4 pl-10 w-64 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                        <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
+                    </div>
+
+                    <!-- User Menu -->
+                    
+                    <a href="/users/login/" class="text-gray-700 hover:text-purple-600">
+                        <i class="fas fa-user-plus text-xl"></i>
+                    </a>
+                    
+
+                    <!-- Cart -->
+                    <div x-data="{ cartOpen: false }" class="relative">
+                        <button @click="cartOpen = !cartOpen" class="text-gray-700 hover:text-purple-600 relative">
+                            <i class="fas fa-shopping-bag text-xl"></i>
+                            <span id="cart-count"
+                                class="absolute -top-2 -right-2 bg-purple-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                                0
+                            </span>
+                        </button>
+
+                        <!-- Cart Dropdown -->
+                        <div x-show="cartOpen" @click.away="cartOpen = false"
+                            class="absolute right-0 mt-2 w-80 bg-white rounded-lg shadow-xl p-4 z-50 border"
+                            id="cart-dropdown">
+                            <h3 class="font-semibold mb-3">Your Cart</h3>
+                            <div class="space-y-3 max-h-96 overflow-y-auto custom-scrollbar">
+                                
+                                <div class="text-center py-6">
+                                    <i class="fas fa-shopping-cart text-gray-200 text-3xl mb-2"></i>
+                                    <p class="text-sm text-gray-500">Your cart is empty</p>
+                                </div>
+                                
+                            </div>
+                            
+                        </div>
+                    </div>
+
+                    <!-- Mobile Menu Button -->
+                    <button @click="mobileMenuOpen = !mobileMenuOpen" class="md:hidden text-gray-700">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile Menu -->
+            <div x-show="mobileMenuOpen" class="md:hidden mt-4 pb-4 space-y-3">
+                <a href="/" class="block text-gray-700 hover:text-purple-600">Home</a>
+                <a href="/products/?category=flowers"
+                    class="block text-gray-700 hover:text-purple-600">Flowers</a>
+                <a href="/products/?category=cakes"
+                    class="block text-gray-700 hover:text-purple-600">Cakes</a>
+                <a href="/products/?category=occasions"
+                    class="block text-gray-700 hover:text-purple-600">Occasions</a>
+                <a href="/about/" class="block text-gray-700 hover:text-purple-600">About</a>
+                <a href="/contact/" class="block text-gray-700 hover:text-purple-600">Contact</a>
+
+                <!-- Mobile Search -->
+                <div class="relative mt-3">
+                    <input type="text" placeholder="Search..."
+                        class="border border-gray-300 rounded-full py-2 px-4 pl-10 w-full focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                    <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main id="main-content" class="flex-grow flex flex-col">
+        
+<!-- 🔥 Trending Notification Bar -->
+<div class="bg-gradient-to-r from-red-600 via-orange-600 to-amber-600 text-white py-3 px-4 relative overflow-hidden">
+    <div class="absolute inset-0 animate-shimmer opacity-30"></div>
+
+    <!-- Floating decorative elements -->
+    <div class="absolute top-0 left-10 opacity-20 animate-float">
+        <i class="fas fa-gift text-4xl text-white"></i>
+    </div>
+    <div class="absolute bottom-0 right-20 opacity-20 animate-bounce-slow">
+        <i class="fas fa-star text-3xl text-yellow-300"></i>
+    </div>
+
+    <div class="container mx-auto flex items-center justify-between relative z-10">
+        <div class="flex items-center space-x-3">
+            <i class="fas fa-fire text-yellow-300 animate-fire-flicker text-xl"></i>
+            <span class="font-bold text-sm md:text-base animate-pulse">🎉 FLASH SALE: UP TO 50% OFF!</span>
+        </div>
+        <div class="flex items-center space-x-4">
+            <span class="text-xs md:text-sm bg-white/20 px-3 py-1 rounded-full backdrop-blur-sm">
+                <i class="far fa-clock mr-2"></i>Ends in: <span class="font-bold">04:32:15</span>
+            </span>
+            <a href="/products/"
+                class="hidden md:inline-block bg-white text-red-600 px-4 py-1 rounded-full font-bold text-sm hover:bg-gray-100 transition-colors animate-bounce-slow">
+                SHOP NOW
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- Hero Section -->
+<section class="relative bg-gradient-to-r from-purple-900 to-amber-900 text-white py-20">
+    <div class="container mx-auto px-4">
+        <div class="flex flex-col lg:flex-row items-center">
+            <div class="lg:w-1/2 mb-10 lg:mb-0">
+                <h1
+                    class="text-4xl md:text-5xl lg:text-6xl font-playfair font-bold leading-tight mb-4 animate-fade-in-up">
+                    Premium Flowers & Cakes <br>
+                    <span class="text-amber-400 inline-block animate-heartbeat">For Every Occasion</span>
+                </h1>
+                <p class="text-xl mb-8 text-gray-200 animate-fade-in-up" style="animation-delay: 0.2s;">
+                    Fresh arrangements crafted with love, delivered with care.
+                    Make every moment special with our premium selections.
+                </p>
+                <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 animate-fade-in-up"
+                    style="animation-delay: 0.4s;">
+                    <a href="/products/"
+                        class="bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 px-8 rounded-full text-center transition-all duration-300 transform hover:scale-105 animate-pulse-glow relative overflow-hidden group">
+                        <span class="relative z-10">Shop Collection</span>
+                        <div
+                            class="absolute inset-0 bg-white/20 transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+                        </div>
+                    </a>
+                    <a href="/products/?category=occasions"
+                        class="bg-transparent border-2 border-white hover:bg-white hover:text-gray-900 text-white font-semibold py-3 px-8 rounded-full text-center transition-all duration-300 transform hover:scale-105 relative overflow-hidden group">
+                        <span class="relative z-10">View Occasions</span>
+                        <div
+                            class="absolute inset-0 bg-gradient-to-r from-purple-600 to-pink-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="lg:w-1/2 flex justify-center">
+                <div class="relative group">
+                    <!-- Main Hero Image with Animation -->
+                    <img src="/media/products/red_roses.png" alt="Premium Floral Arrangement"
+                        class="rounded-lg shadow-2xl w-full max-w-lg transform hover:scale-105 transition-all duration-500 ease-in-out relative z-10">
+
+                    <!-- Decorative background elements -->
+                    <div
+                        class="absolute -inset-4 bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg blur-2xl opacity-30 group-hover:opacity-50 transition-opacity duration-500 -z-0">
+                    </div>
+
+                    <!-- Floating badges container with staggered animations -->
+                    <div class="absolute inset-0 pointer-events-none z-20">
+                        <!-- Free Delivery Badge - Top Right with Bounce -->
+                        <div class="absolute -top-4 -right-4 animate-bounce-slow">
+                            <div
+                                class="bg-gradient-to-r from-purple-600 to-pink-600 text-white p-4 rounded-full shadow-2xl transform hover:rotate-12 transition-transform duration-300 pointer-events-auto cursor-pointer">
+                                <div class="text-center">
+                                    <i class="fas fa-truck text-2xl mb-1"></i>
+                                    <p class="text-xs font-bold">FREE</p>
+                                    <p class="text-xs">Delivery</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Same Day Delivery Badge - Bottom Left (KEPT ONLY ONE) -->
+                        <div class="absolute -bottom-6 -left-6 animate-fade-in-up">
+                            <div
+                                class="bg-white/95 backdrop-blur-sm text-gray-900 p-5 rounded-xl shadow-2xl border-l-4 border-purple-600 transform hover:scale-105 transition-all duration-300 pointer-events-auto">
+                                <div class="flex items-center space-x-3">
+                                    <div class="bg-purple-100 rounded-full p-3 animate-pulse">
+                                        <i class="fas fa-stopwatch text-purple-600 text-2xl"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="font-bold text-lg">Same Day Delivery</h3>
+                                        <p class="text-sm text-gray-600">Order by 2pm</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Premium Quality Badge - Left Side with Float -->
+                        <div class="absolute top-1/2 -left-6 animate-float">
+                            <div
+                                class="bg-gradient-to-r from-amber-500 to-orange-500 text-white p-3 rounded-lg shadow-xl transform -rotate-6 hover:rotate-0 transition-transform duration-300 pointer-events-auto cursor-pointer">
+                                <div class="text-center">
+                                    <i class="fas fa-star text-xl mb-1"></i>
+                                    <p class="text-xs font-bold">Premium</p>
+                                    <p class="text-xs">Quality</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Decorative Divider with Images -->
+<div class="relative py-8 bg-gradient-to-r from-purple-100 via-pink-100 to-amber-100 overflow-hidden">
+    <div class="absolute inset-0 opacity-20">
+        <!-- Floating decorative icons -->
+        <i class="fas fa-heart absolute top-4 left-10 text-purple-600 text-2xl animate-float"></i>
+        <i class="fas fa-star absolute top-8 right-20 text-amber-600 text-xl animate-bounce-slow"></i>
+        <i class="fas fa-flower absolute bottom-4 left-1/4 text-pink-600 text-3xl animate-float"
+            style="animation-delay: 0.5s;"></i>
+        <i class="fas fa-gift absolute bottom-8 right-1/3 text-purple-600 text-2xl animate-wiggle"></i>
+        <i class="fas fa-leaf absolute top-1/2 left-5 text-green-600 text-xl animate-float"
+            style="animation-delay: 1s;"></i>
+        <i class="fas fa-sparkles absolute top-1/3 right-10 text-yellow-600 text-2xl animate-pulse"></i>
+    </div>
+    <div class="container mx-auto px-4 relative z-10">
+        <div class="flex items-center justify-center space-x-4">
+            <div class="h-px bg-gradient-to-r from-transparent via-purple-400 to-transparent flex-1"></div>
+            <i class="fas fa-crown text-purple-600 text-3xl animate-pulse"></i>
+            <div class="h-px bg-gradient-to-r from-transparent via-purple-400 to-transparent flex-1"></div>
+        </div>
+    </div>
+</div>
+
+<!-- Featured Categories -->
+<section class="py-16 bg-white relative overflow-hidden">
+    <!-- Background animation -->
+    <div class="absolute inset-0 opacity-5 gradient-animate">
+        <div class="absolute top-20 left-20 w-72 h-72 bg-purple-300 rounded-full mix-blend-multiply filter blur-xl">
+        </div>
+        <div class="absolute top-40 right-20 w-72 h-72 bg-pink-300 rounded-full mix-blend-multiply filter blur-xl">
+        </div>
+        <div class="absolute -bottom-8 left-1/2 w-72 h-72 bg-amber-300 rounded-full mix-blend-multiply filter blur-xl">
+        </div>
+    </div>
+
+    <div class="container mx-auto px-4 relative z-10">
+        <div class="text-center mb-12" data-aos="fade-up">
+            <h2 class="text-3xl font-playfair font-bold text-gray-900 mb-4">Shop By Category</h2>
+            <p class="text-gray-600 max-w-2xl mx-auto">Discover our premium collection curated for every occasion and
+                celebration.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8" data-aos="fade-up" data-aos-delay="100">
+            <!-- Category 1 -->
+            <div class="group relative overflow-hidden rounded-xl hover-lift cursor-pointer transform transition-all duration-500 animate-scale-up"
+                style="animation-delay: 0.1s;">
+                <img src="/media/categories/flowers.png" alt="Flowers"
+                    class="w-full h-64 object-cover transition-transform duration-700 group-hover:scale-125 group-hover:rotate-2">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end">
+                    <div class="p-6 text-white transform transition-transform duration-300 group-hover:-translate-y-2">
+                        <h3 class="text-xl font-semibold mb-1">Fresh Flowers</h3>
+                        <p class="text-sm opacity-80">Handpicked daily</p>
+                        <div
+                            class="mt-3 flex items-center text-amber-400 text-sm font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            Shop Now <i
+                                class="fas fa-arrow-right ml-2 transform group-hover:translate-x-2 transition-transform"></i>
+                        </div>
+                    </div>
+                </div>
+                <a href="/products/?category=flowers" class="absolute inset-0"></a>
+            </div>
+
+            <!-- Category 2 -->
+            <div class="group relative overflow-hidden rounded-xl hover-lift cursor-pointer transform transition-all duration-500 animate-scale-up"
+                style="animation-delay: 0.2s;">
+                <img src="/media/categories/cakes.png" alt="Cakes"
+                    class="w-full h-64 object-cover transition-transform duration-700 group-hover:scale-125 group-hover:rotate-2">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end">
+                    <div class="p-6 text-white transform transition-transform duration-300 group-hover:-translate-y-2">
+                        <h3 class="text-xl font-semibold mb-1">Artisan Cakes</h3>
+                        <p class="text-sm opacity-80">Custom designs</p>
+                        <div
+                            class="mt-3 flex items-center text-amber-400 text-sm font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            Shop Now <i
+                                class="fas fa-arrow-right ml-2 transform group-hover:translate-x-2 transition-transform"></i>
+                        </div>
+                    </div>
+                </div>
+                <a href="/products/?category=cakes" class="absolute inset-0"></a>
+            </div>
+
+            <!-- Category 3 -->
+            <div class="group relative overflow-hidden rounded-xl hover-lift cursor-pointer transform transition-all duration-500 animate-scale-up"
+                style="animation-delay: 0.3s;">
+                <img src="/media/categories/combos.png" alt="Combos"
+                    class="w-full h-64 object-cover transition-transform duration-700 group-hover:scale-125 group-hover:rotate-2">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end">
+                    <div class="p-6 text-white transform transition-transform duration-300 group-hover:-translate-y-2">
+                        <h3 class="text-xl font-semibold mb-1">Special Combos</h3>
+                        <p class="text-sm opacity-80">Perfect gifts</p>
+                        <div
+                            class="mt-3 flex items-center text-amber-400 text-sm font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            Shop Now <i
+                                class="fas fa-arrow-right ml-2 transform group-hover:translate-x-2 transition-transform"></i>
+                        </div>
+                    </div>
+                </div>
+                <a href="/products/?category=combos" class="absolute inset-0"></a>
+            </div>
+
+            <!-- Category 4 -->
+            <div class="group relative overflow-hidden rounded-xl hover-lift cursor-pointer transform transition-all duration-500 animate-scale-up"
+                style="animation-delay: 0.4s;">
+                <img src="/media/occasions/anniversary.png" alt="Occasions"
+                    class="w-full h-64 object-cover transition-transform duration-700 group-hover:scale-125 group-hover:rotate-2">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end">
+                    <div class="p-6 text-white transform transition-transform duration-300 group-hover:-translate-y-2">
+                        <h3 class="text-xl font-semibold mb-1">Occasions</h3>
+                        <p class="text-sm opacity-80">Celebrate in style</p>
+                        <div
+                            class="mt-3 flex items-center text-amber-400 text-sm font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            Shop Now <i
+                                class="fas fa-arrow-right ml-2 transform group-hover:translate-x-2 transition-transform"></i>
+                        </div>
+                    </div>
+                </div>
+                <a href="/products/?category=occasions" class="absolute inset-0"></a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Featured Products -->
+<section class="py-16 bg-gray-50">
+    <div class="container mx-auto px-4">
+        <div class="text-center mb-12" data-aos="fade-up">
+            <h2 class="text-3xl font-playfair font-bold text-gray-900 mb-4">Featured Products</h2>
+            <p class="text-gray-600 max-w-2xl mx-auto">Our most popular selections loved by customers worldwide.</p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8" data-aos="fade-up" data-aos-delay="100">
+            <!-- Product 1 -->
+            <div class="bg-white rounded-xl shadow-sm overflow-hidden group">
+                <div class="relative">
+                    <img src="/media/categories/flowers.png" alt="Premium Rose Bouquet"
+                        class="w-full h-64 object-cover">
+                    <button
+                        class="absolute top-4 right-4 bg-white rounded-full p-2 shadow-md hover:bg-purple-600 hover:text-white transition-colors">
+                        <i class="far fa-heart"></i>
+                    </button>
+                    <div
+                        class="absolute bottom-4 left-4 bg-amber-500 text-white text-xs font-semibold px-2 py-1 rounded">
+                        Sale 20% OFF
+                    </div>
+                </div>
+                <div class="p-6">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <h3 class="font-semibold text-lg mb-1">Premium Rose Bouquet</h3>
+                            <p class="text-gray-600 text-sm mb-3">Red roses with eucalyptus</p>
+                        </div>
+                        <div class="text-right">
+                            <div class="text-lg font-bold text-purple-600">₹899</div>
+                            <div class="text-sm text-gray-500 line-through">₹1,124</div>
+                        </div>
+                    </div>
+                    <div class="flex items-center mb-3">
+                        <div class="flex text-amber-400">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                        <span class="text-gray-500 text-sm ml-2">(128)</span>
+                    </div>
+                    <button
+                        class="w-full bg-purple-600 hover:bg-purple-700 text-white py-2 rounded-lg transition-colors">
+                        Add to Cart
+                    </button>
+                </div>
+            </div>
+
+            <!-- Product 2 -->
+            <div class="bg-white rounded-xl shadow-sm overflow-hidden group">
+                <div class="relative">
+                    <img src="/media/categories/cakes.png" alt="Chocolate Truffle Cake"
+                        class="w-full h-64 object-cover">
+                    <button
+                        class="absolute top-4 right-4 bg-white rounded-full p-2 shadow-md hover:bg-purple-600 hover:text-white transition-colors">
+                        <i class="far fa-heart"></i>
+                    </button>
+                </div>
+                <div class="p-6">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <h3 class="font-semibold text-lg mb-1">Chocolate Truffle Cake</h3>
+                            <p class="text-gray-600 text-sm mb-3">Rich chocolate ganache</p>
+                        </div>
+                        <div class="text-right">
+                            <div class="text-lg font-bold text-purple-600">₹1,499</div>
+                        </div>
+                    </div>
+                    <div class="flex items-center mb-3">
+                        <div class="flex text-amber-400">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <span class="text-gray-500 text-sm ml-2">(256)</span>
+                    </div>
+                    <button
+                        class="w-full bg-purple-600 hover:bg-purple-700 text-white py-2 rounded-lg transition-colors">
+                        Add to Cart
+                    </button>
+                </div>
+            </div>
+
+            <!-- Product 3 -->
+            <div class="bg-white rounded-xl shadow-sm overflow-hidden group">
+                <div class="relative">
+                    <img src="/media/products/mixed_basket.png" alt="Mixed Floral Arrangement"
+                        class="w-full h-64 object-cover">
+                    <button
+                        class="absolute top-4 right-4 bg-white rounded-full p-2 shadow-md hover:bg-purple-600 hover:text-white transition-colors">
+                        <i class="far fa-heart"></i>
+                    </button>
+                </div>
+                <div class="p-6">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <h3 class="font-semibold text-lg mb-1">Mixed Floral Arrangement</h3>
+                            <p class="text-gray-600 text-sm mb-3">Seasonal blooms</p>
+                        </div>
+                        <div class="text-right">
+                            <div class="text-lg font-bold text-purple-600">₹1,299</div>
+                        </div>
+                    </div>
+                    <div class="flex items-center mb-3">
+                        <div class="flex text-amber-400">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star"></i>
+                        </div>
+                        <span class="text-gray-500 text-sm ml-2">(94)</span>
+                    </div>
+                    <button
+                        class="w-full bg-purple-600 hover:bg-purple-700 text-white py-2 rounded-lg transition-colors">
+                        Add to Cart
+                    </button>
+                </div>
+            </div>
+
+            <!-- Product 4 -->
+            <div class="bg-white rounded-xl shadow-sm overflow-hidden group">
+                <div class="relative">
+                    <img src="/media/products/anniversary_combo.png" alt="Anniversary Special Combo"
+                        class="w-full h-64 object-cover">
+                    <button
+                        class="absolute top-4 right-4 bg-white rounded-full p-2 shadow-md hover:bg-purple-600 hover:text-white transition-colors">
+                        <i class="far fa-heart"></i>
+                    </button>
+                    <div
+                        class="absolute bottom-4 left-4 bg-purple-600 text-white text-xs font-semibold px-2 py-1 rounded">
+                        Trending
+                    </div>
+                </div>
+                <div class="p-6">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <h3 class="font-semibold text-lg mb-1">Anniversary Special Combo</h3>
+                            <p class="text-gray-600 text-sm mb-3">Flowers + Cake + Chocolates</p>
+                        </div>
+                        <div class="text-right">
+                            <div class="text-lg font-bold text-purple-600">₹2,499</div>
+                        </div>
+                    </div>
+                    <div class="flex items-center mb-3">
+                        <div class="flex text-amber-400">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                        <span class="text-gray-500 text-sm ml-2">(187)</span>
+                    </div>
+                    <button
+                        class="w-full bg-purple-600 hover:bg-purple-700 text-white py-2 rounded-lg transition-colors">
+                        Add to Cart
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center mt-12">
+            <a href="/products/"
+                class="inline-block bg-white border-2 border-purple-600 text-purple-600 hover:bg-purple-600 hover:text-white font-semibold py-3 px-8 rounded-full transition-colors">
+                View All Products
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- 🔥 Trending Now Section (Amazon/Flipkart Style) -->
+<section class="py-16 bg-gradient-to-r from-purple-50 via-pink-50 to-amber-50">
+    <div class="container mx-auto px-4">
+        <div class="flex items-center justify-between mb-8" data-aos="fade-right">
+            <div class="flex items-center space-x-3">
+                <i class="fas fa-fire text-red-500 text-3xl animate-pulse"></i>
+                <h2 class="text-3xl font-playfair font-bold text-gray-900">🔥 Trending Now</h2>
+            </div>
+            <a href="/products/"
+                class="text-purple-600 hover:text-purple-700 font-semibold flex items-center">
+                See All Trending <i class="fas fa-arrow-right ml-2"></i>
+            </a>
+        </div>
+
+        <!-- Trending Banner -->
+        <div data-aos="zoom-in"
+            class="bg-gradient-to-r from-red-500 via-orange-500 to-amber-500 rounded-2xl p-8 mb-8 text-white relative overflow-hidden">
+            <!-- Animated background patterns -->
+            <div class="absolute inset-0 opacity-10">
+                <i class="fas fa-shopping-bag absolute top-10 left-20 text-8xl animate-float"></i>
+                <i class="fas fa-gift absolute bottom-10 right-20 text-7xl animate-bounce-slow"></i>
+                <i class="fas fa-star absolute top-1/2 left-1/3 text-6xl animate-wiggle"></i>
+            </div>
+
+            <div class="absolute top-0 right-0 opacity-10 transform translate-x-20 -translate-y-20">
+                <i class="fas fa-shopping-bag text-9xl"></i>
+            </div>
+            <div class="relative z-10">
+                <div class="flex items-center space-x-2 mb-2">
+                    <i class="fas fa-bolt text-yellow-300 text-2xl"></i>
+                    <span class="bg-yellow-400 text-red-600 px-3 py-1 rounded-full text-sm font-bold">FLASH SALE</span>
+                </div>
+                <h3 class="text-3xl font-bold mb-2">Up to 50% OFF on Combos!</h3>
+                <p class="text-white/90 mb-4">Limited period offer - Don't miss out!</p>
+                <div class="flex items-center space-x-4">
+                    <button
+                        class="bg-white text-red-600 px-6 py-2 rounded-full font-bold hover:bg-gray-100 transition-colors">
+                        Shop Now
+                    </button>
+                    <div class="flex items-center space-x-2">
+                        <i class="far fa-clock"></i>
+                        <span class="text-sm">Ends in: <span class="font-bold">04:32:15</span></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Best Sellers Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            <!-- Best Seller 1 -->
+            <div
+                class="bg-white rounded-xl shadow-lg overflow-hidden group hover:shadow-2xl transition-shadow duration-300 relative">
+                <!-- Corner decorative ribbon -->
+                <div
+                    class="absolute top-0 right-0 z-10 w-0 h-0 border-t-[60px] border-t-red-500 border-r-[60px] border-r-transparent overflow-hidden rounded-tr-xl">
+                    <i class="fas fa-fire text-white absolute top-2 right-2 text-sm animate-fire-flicker"></i>
+                </div>
+
+                <div class="relative">
+                    <img src="/media/categories/flowers.png" alt="Best Seller"
+                        class="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-300">
+
+                    <!-- Floating heart icon that appears on hover -->
+                    <div
+                        class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+                        <i class="fas fa-heart text-red-500 text-5xl animate-heartbeat drop-shadow-lg"></i>
+                    </div>
+
+                    <div
+                        class="absolute top-2 left-2 bg-red-500 text-white px-3 py-1 rounded-full text-xs font-bold animate-pulse">
+                        🔥 #1 BESTSELLER
+                    </div>
+                    <div
+                        class="absolute bottom-2 right-2 bg-green-500 text-white px-2 py-1 rounded-full text-xs font-bold animate-bounce-slow">
+                        25% OFF
+                    </div>
+                </div>
+                <div class="p-4">
+                    <h3 class="font-bold text-gray-900 mb-2">Premium Rose Bouquet</h3>
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <span class="text-gray-400 line-through text-sm">₹1,199</span>
+                            <div class="text-purple-600 font-bold text-lg">₹899</div>
+                        </div>
+                        <div class="flex items-center bg-green-100 px-2 py-1 rounded">
+                            <i class="fas fa-check-circle text-green-600 text-xs mr-1"></i>
+                            <span class="text-green-600 text-xs font-bold">In Stock</span>
+                        </div>
+                    </div>
+                    <div class="flex items-center mt-2">
+                        <div class="flex text-amber-400 text-xs">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                        <span class="text-gray-500 text-xs ml-1">(4.5)</span>
+                    </div>
+                    <button
+                        class="w-full mt-3 bg-orange-500 hover:bg-orange-600 text-white py-2 rounded-lg font-bold transition-colors">
+                        ADD TO CART
+                    </button>
+                </div>
+            </div>
+
+            <!-- Best Seller 2 -->
+            <div
+                class="bg-white rounded-xl shadow-lg overflow-hidden group hover:shadow-2xl transition-shadow duration-300">
+                <div class="relative">
+                    <img src="/media/categories/cakes.png" alt="Best Seller"
+                        class="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-300">
+                    <div
+                        class="absolute top-2 left-2 bg-purple-500 text-white px-3 py-1 rounded-full text-xs font-bold">
+                        ⭐ HOT PICK
+                    </div>
+                    <div class="absolute bottom-2 left-2 bg-black/70 text-white px-2 py-1 rounded text-xs">
+                        <i class="fas fa-eye"></i> 234 viewed today
+                    </div>
+                </div>
+                <div class="p-4">
+                    <h3 class="font-bold text-gray-900 mb-2">Chocolate Truffle Cake</h3>
+                    <div class="flex items-center justify-between">
+                        <div class="text-purple-600 font-bold text-lg">₹1,499</div>
+                        <div class="flex items-center bg-green-100 px-2 py-1 rounded">
+                            <i class="fas fa-check-circle text-green-600 text-xs mr-1"></i>
+                            <span class="text-green-600 text-xs font-bold">In Stock</span>
+                        </div>
+                    </div>
+                    <div class="flex items-center mt-2">
+                        <div class="flex text-amber-400 text-xs">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <span class="text-gray-500 text-xs ml-1">(5.0)</span>
+                    </div>
+                    <button
+                        class="w-full mt-3 bg-purple-600 hover:bg-purple-700 text-white py-2 rounded-lg font-bold transition-colors">
+                        ADD TO CART
+                    </button>
+                </div>
+            </div>
+
+            <!-- Best Seller 3 -->
+            <div
+                class="bg-white rounded-xl shadow-lg overflow-hidden group hover:shadow-2xl transition-shadow duration-300">
+                <div class="relative">
+                    <img src="/static/images/flowers-lily-elegance.jpg" alt="Best Seller"
+                        class="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-300">
+                    <div class="absolute top-2 left-2 bg-blue-500 text-white px-3 py-1 rounded-full text-xs font-bold">
+                        🎯 TRENDING
+                    </div>
+                    <div class="absolute top-2 right-2 bg-red-500 text-white px-2 py-1 rounded-full text-xs font-bold">
+                        15% OFF
+                    </div>
+                </div>
+                <div class="p-4">
+                    <h3 class="font-bold text-gray-900 mb-2">Mixed Floral Arrangement</h3>
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <span class="text-gray-400 line-through text-sm">₹1,529</span>
+                            <div class="text-purple-600 font-bold text-lg">₹1,299</div>
+                        </div>
+                        <div class="flex items-center bg-yellow-100 px-2 py-1 rounded">
+                            <i class="fas fa-truck text-yellow-600 text-xs mr-1"></i>
+                            <span class="text-yellow-600 text-xs font-bold">Free Delivery</span>
+                        </div>
+                    </div>
+                    <div class="flex items-center mt-2">
+                        <div class="flex text-amber-400 text-xs">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star"></i>
+                        </div>
+                        <span class="text-gray-500 text-xs ml-1">(4.0)</span>
+                    </div>
+                    <button
+                        class="w-full mt-3 bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-lg font-bold transition-colors">
+                        ADD TO CART
+                    </button>
+                </div>
+            </div>
+
+            <!-- Best Seller 4 -->
+            <div
+                class="bg-white rounded-xl shadow-lg overflow-hidden group hover:shadow-2xl transition-shadow duration-300">
+                <div class="relative">
+                    <img src="/static/images/cake-red-velvet.jpg" alt="Best Seller"
+                        class="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-300">
+                    <div class="absolute top-2 left-2 bg-amber-500 text-white px-3 py-1 rounded-full text-xs font-bold">
+                        👑 PREMIUM CHOICE
+                    </div>
+                    <div
+                        class="absolute bottom-2 right-2 bg-white/90 text-gray-900 px-2 py-1 rounded text-xs font-bold">
+                        Only 3 left!
+                    </div>
+                </div>
+                <div class="p-4">
+                    <h3 class="font-bold text-gray-900 mb-2">Anniversary Special Combo</h3>
+                    <div class="flex items-center justify-between">
+                        <div class="text-purple-600 font-bold text-lg">₹2,499</div>
+                        <div class="flex items-center bg-red-100 px-2 py-1 rounded">
+                            <i class="fas fa-bolt text-red-600 text-xs mr-1"></i>
+                            <span class="text-red-600 text-xs font-bold">Selling Fast!</span>
+                        </div>
+                    </div>
+                    <div class="flex items-center mt-2">
+                        <div class="flex text-amber-400 text-xs">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                        <span class="text-gray-500 text-xs ml-1">(4.5)</span>
+                    </div>
+                    <button
+                        class="w-full mt-3 bg-amber-500 hover:bg-amber-600 text-white py-2 rounded-lg font-bold transition-colors">
+                        ADD TO CART
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+<!-- Why Choose Us -->
+<section class="py-16 bg-white">
+    <div class="container mx-auto px-4">
+        <div class="text-center mb-12" data-aos="fade-up">
+            <h2 class="text-3xl font-playfair font-bold text-gray-900 mb-4">Why Choose Nikki Flower & Cake?</h2>
+            <p class="text-gray-600 max-w-2xl mx-auto">We go above and beyond to make your special moments
+                unforgettable.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8" data-aos="fade-up" data-aos-delay="200">
+            <!-- Feature 1 -->
+            <div class="text-center">
+                <div class="bg-purple-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-truck text-purple-600 text-2xl"></i>
+                </div>
+                <h3 class="font-semibold text-lg mb-2">Same-Day Delivery</h3>
+                <p class="text-gray-600">Order by 2pm and receive fresh arrangements the same day.</p>
+            </div>
+
+            <!-- Feature 2 -->
+            <div class="text-center">
+                <div class="bg-amber-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-gift text-amber-600 text-2xl"></i>
+                </div>
+                <h3 class="font-semibold text-lg mb-2">Personal Touch</h3>
+                <p class="text-gray-600">Add personalized messages and special requests to your order.</p>
+            </div>
+
+            <!-- Feature 3 -->
+            <div class="text-center">
+                <div class="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-leaf text-green-600 text-2xl"></i>
+                </div>
+                <h3 class="font-semibold text-lg mb-2">Fresh Guarantee</h3>
+                <p class="text-gray-600">Premium quality flowers and ingredients sourced daily.</p>
+            </div>
+
+            <!-- Feature 4 -->
+            <div class="text-center">
+                <div class="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-headset text-blue-600 text-2xl"></i>
+                </div>
+                <h3 class="font-semibold text-lg mb-2">24/7 Support</h3>
+                <p class="text-gray-600">Dedicated customer service to assist with your special requests.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Testimonials -->
+<section class="py-16 bg-gray-50">
+    <div class="container mx-auto px-4">
+        <div class="text-center mb-12" data-aos="fade-up">
+            <h2 class="text-3xl font-playfair font-bold text-gray-900 mb-4">What Our Customers Say</h2>
+            <p class="text-gray-600 max-w-2xl mx-auto">Real stories from customers who trusted us with their special
+                moments.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8" data-aos="fade-up" data-aos-delay="200">
+            <!-- Testimonial 1 -->
+            <div class="bg-white p-6 rounded-xl shadow-sm">
+                <div class="flex text-amber-400 mb-4">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+                <p class="text-gray-600 italic mb-4">"The rose bouquet was absolutely stunning! My wife was thrilled
+                    with the surprise delivery. The freshness and arrangement exceeded expectations."</p>
+                <div class="flex items-center">
+                    <div class="bg-gray-200 border-2 border-dashed rounded-xl w-16 h-16"></div>
+                    <div class="ml-4">
+                        <h4 class="font-semibold">Rahul Sharma</h4>
+                        <p class="text-gray-600 text-sm">Verified Customer</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Testimonial 2 -->
+            <div class="bg-white p-6 rounded-xl shadow-sm">
+                <div class="flex text-amber-400 mb-4">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+                <p class="text-gray-600 italic mb-4">"Ordered a custom birthday cake with short notice. The team
+                    delivered a masterpiece that looked incredible and tasted amazing!"</p>
+                <div class="flex items-center">
+                    <div class="bg-gray-200 border-2 border-dashed rounded-xl w-16 h-16"></div>
+                    <div class="ml-4">
+                        <h4 class="font-semibold">Priya Patel</h4>
+                        <p class="text-gray-600 text-sm">Verified Customer</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Testimonial 3 -->
+            <div class="bg-white p-6 rounded-xl shadow-sm">
+                <div class="flex text-amber-400 mb-4">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star-half-alt"></i>
+                </div>
+                <p class="text-gray-600 italic mb-4">"The anniversary combo was perfect! The flowers were fresh, the
+                    cake was delicious, and the delivery was right on time. Will definitely order again."</p>
+                <div class="flex items-center">
+                    <div class="bg-gray-200 border-2 border-dashed rounded-xl w-16 h-16"></div>
+                    <div class="ml-4">
+                        <h4 class="font-semibold">Amit & Sneha</h4>
+                        <p class="text-gray-600 text-sm">Verified Customer</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+    </main>
+
+    <!-- Toast Container (for HTMX notifications) -->
+    <div id="toast-container" class="fixed bottom-4 right-4 z-50"></div>
+
+    <!-- Beautiful Footer with Decorative Images -->
+    <footer class="bg-gradient-to-br from-purple-900 via-purple-800 to-pink-900 text-white relative overflow-hidden">
+        <!-- Animated background decorations -->
+        <div class="absolute inset-0 opacity-10">
+            <i class="fas fa-flower absolute top-20 left-10 text-6xl text-purple-300 animate-float"></i>
+            <i class="fas fa-heart absolute top-40 right-20 text-5xl text-pink-300 animate-bounce-slow"></i>
+            <i class="fas fa-star absolute bottom-20 left-1/3 text-4xl text-amber-300 animate-wiggle"></i>
+            <i class="fas fa-gift absolute bottom-40 right-1/4 text-6xl text-purple-300 animate-float"
+                style="animation-delay: 0.5s;"></i>
+            <i class="fas fa-leaf absolute top-1/2 left-5 text-5xl text-green-300 animate-float"
+                style="animation-delay: 1s;"></i>
+        </div>
+
+        <div class="container mx-auto px-4 py-12 relative z-10">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12 mb-8">
+                <!-- Brand Section -->
+                <div class="text-center sm:text-left">
+                    <div class="flex items-center justify-center sm:justify-start space-x-2 mb-4">
+                        <i class="fas fa-crown text-amber-400 text-3xl animate-pulse"></i>
+                        <h3 class="text-2xl font-playfair font-bold">Nikki Flower & Cake</h3>
+                    </div>
+                    <p class="text-purple-200 text-sm mb-4">Premium flowers and cakes delivered with love across India.
+                    </p>
+                    <div class="flex justify-center sm:justify-start space-x-3">
+                        <a href="#"
+                            class="bg-white/10 hover:bg-white/20 p-2 rounded-full transition-all duration-300 transform hover:scale-110">
+                            <i class="fab fa-facebook-f text-xl"></i>
+                        </a>
+                        <a href="#"
+                            class="bg-white/10 hover:bg-white/20 p-2 rounded-full transition-all duration-300 transform hover:scale-110">
+                            <i class="fab fa-instagram text-xl"></i>
+                        </a>
+                        <a href="#"
+                            class="bg-white/10 hover:bg-white/20 p-2 rounded-full transition-all duration-300 transform hover:scale-110">
+                            <i class="fab fa-twitter text-xl"></i>
+                        </a>
+                        <a href="#"
+                            class="bg-white/10 hover:bg-white/20 p-2 rounded-full transition-all duration-300 transform hover:scale-110">
+                            <i class="fab fa-whatsapp text-xl"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <div class="text-center sm:text-left">
+                    <h4 class="font-semibold text-lg mb-4 flex items-center justify-center sm:justify-start">
+                        <i class="fas fa-link text-amber-400 mr-2 animate-wiggle"></i>
+                        Quick Links
+                    </h4>
+                    <ul class="space-y-2">
+                        <li><a href="/about/"
+                                class="text-purple-200 hover:text-amber-400 transition-colors flex items-center justify-center sm:justify-start"><i
+                                    class="fas fa-chevron-right text-xs mr-2 animate-pulse"></i>About Us</a></li>
+                        <li><a href="/contact/"
+                                class="text-purple-200 hover:text-amber-400 transition-colors flex items-center justify-center sm:justify-start"><i
+                                    class="fas fa-chevron-right text-xs mr-2 animate-pulse"></i>Contact</a></li>
+                        <li><a href="#"
+                                class="text-purple-200 hover:text-amber-400 transition-colors flex items-center justify-center sm:justify-start"><i
+                                    class="fas fa-chevron-right text-xs mr-2 animate-pulse"></i>FAQs</a></li>
+                        <li><a href="#"
+                                class="text-purple-200 hover:text-amber-400 transition-colors flex items-center justify-center sm:justify-start"><i
+                                    class="fas fa-chevron-right text-xs mr-2 animate-pulse"></i>Privacy Policy</a></li>
+                    </ul>
+                </div>
+
+                <!-- Categories -->
+                <div class="text-center sm:text-left">
+                    <h4 class="font-semibold text-lg mb-4 flex items-center justify-center sm:justify-start">
+                        <i class="fas fa-th-large text-amber-400 mr-2 animate-trending-rotate"
+                            style="animation-duration: 20s;"></i>
+                        Categories
+                    </h4>
+                    <ul class="space-y-2">
+                        <li><a href="/products/?category=flowers"
+                                class="text-purple-200 hover:text-amber-400 transition-colors flex items-center justify-center sm:justify-start"><i
+                                    class="fas fa-chevron-right text-xs mr-2 animate-pulse"></i>Fresh Flowers</a></li>
+                        <li><a href="/products/?category=cakes"
+                                class="text-purple-200 hover:text-amber-400 transition-colors flex items-center justify-center sm:justify-start"><i
+                                    class="fas fa-chevron-right text-xs mr-2 animate-pulse"></i>Artisan Cakes</a></li>
+                        <li><a href="/products/?category=combos"
+                                class="text-purple-200 hover:text-amber-400 transition-colors flex items-center justify-center sm:justify-start"><i
+                                    class="fas fa-chevron-right text-xs mr-2 animate-pulse"></i>Special Combos</a></li>
+                        <li><a href="/products/?category=occasions"
+                                class="text-purple-200 hover:text-amber-400 transition-colors flex items-center justify-center sm:justify-start"><i
+                                    class="fas fa-chevron-right text-xs mr-2 animate-pulse"></i>Occasions</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact Info -->
+                <div class="text-center sm:text-left">
+                    <h4 class="font-semibold text-lg mb-4 flex items-center justify-center sm:justify-start">
+                        <i class="fas fa-headset text-amber-400 mr-2 animate-heartbeat"></i>
+                        Support
+                    </h4>
+                    <ul class="space-y-2 text-purple-200">
+                        <li class="flex items-center justify-center sm:justify-start"><i
+                                class="fas fa-phone text-amber-400 mr-2 animate-pulse"></i>+91 98765 43210</li>
+                        <li class="flex items-center justify-center sm:justify-start"><i
+                                class="fas fa-envelope text-amber-400 mr-2 animate-pulse"></i>hello@nikkiflowercake.com
+                        </li>
+                        <li class="flex items-center justify-center sm:justify-start"><i
+                                class="fas fa-clock text-amber-400 mr-2 animate-pulse"></i>9 AM - 9 PM IST</li>
+                        <li class="flex items-center justify-center sm:justify-start"><i
+                                class="fas fa-map-marker-alt text-amber-400 mr-2 animate-pulse"></i>Mumbai, India</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Bottom Bar with Decorative Elements -->
+            <div class="border-t border-purple-700/50 pt-8 mt-8">
+                <div class="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+                    <div class="text-purple-300 text-sm text-center sm:text-left">
+                        <p>&copy; 2024 Nikki Flower & Cake. Made with <i
+                                class="fas fa-heart text-red-500 animate-heartbeat"></i> in India</p>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <img src="/static/images/placeholder-product.jpg" alt="Payment Methods"
+                            class="h-8 rounded opacity-70 hover:opacity-100 transition-opacity">
+                        <span class="text-purple-300 text-sm">Secure Payments via Razorpay</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+
+
+    <!-- AOS Animation JS -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // Initialize AOS animations
+        document.addEventListener('DOMContentLoaded', function () {
+            AOS.init({
+                duration: 800,
+                once: true,
+                offset: 50,
+                easing: 'ease-out-cubic'
+            });
+        });
+
+        // HTMX config
+        document.body.addEventListener('htmx:configRequest', (event) => {
+            event.detail.headers['X-CSRFToken'] = 'URYDO7Qr82x564Q7mdzAorPv8MqGBvvg8nkhnTSl4xOJ5TV5Mqs2ZnxeuGD7s3mK';
+        });
+    </script>
+
+    
+</body>
+
+</html>

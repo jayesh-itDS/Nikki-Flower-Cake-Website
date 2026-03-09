@@ -1,0 +1,8 @@
+{% for product in products %}
+  {% include "products/partials/product_card.html" with product=product %}
+{% empty %}
+  <div class="col-span-full py-10 text-center text-sm text-slate-500">
+    No products found for your filters. Try adjusting them.
+  </div>
+{% endfor %}
+
