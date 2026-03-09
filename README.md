@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Nikki Flower & Cake - Premium E-commerce Platform
 
 A modern, luxury e-commerce platform built with Django, featuring premium design, advanced functionality, and enterprise-grade architecture.
@@ -245,3 +246,7 @@ This project is proprietary software for Nikki Flower & Cake. All rights reserve
 ---
 
 **Built with ❤️ for luxury e-commerce excellence**
+=======
+# Nikki-Flower-Cake-Website
+Full-stack flower and cake e-commerce website featuring product catalog, add-to-cart, checkout flow, delivery slot selection, and responsive design.
+>>>>>>> 4fff9eccb5f97f235659b82d6d36c6f93f0680c1
